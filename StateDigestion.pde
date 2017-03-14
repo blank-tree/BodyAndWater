@@ -1,13 +1,12 @@
 /**
- * StateBase Class
- * Class for the other states to extend with all the basics
+ * StateDigestion Class
  * @author: HALT Design - Simon Fischer and Fernando Obieta
  */
 
 public class StateDigestion extends StateBase {
 
 
-	Digestion() {
+	StateDigestion() {
 		
 	}
 
