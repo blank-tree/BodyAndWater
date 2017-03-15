@@ -9,7 +9,7 @@ public class StateBase {
 	Silhouette silhouette;
 	float fadeState;
 
-	StateBase(Silhouette silhouette, ) {
+	StateBase(Silhouette silhouette) {
 		this.silhouette = silhouette;
 		fadeState = 0;
 	}

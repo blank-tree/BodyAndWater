@@ -6,8 +6,8 @@
 public class StateDigestion extends StateBase {
 
 
-	StateDigestion() {
-		
+	StateDigestion(Silhouette silhouette) {
+		super(silhouette);
 	}
 
 }

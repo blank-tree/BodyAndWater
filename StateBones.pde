@@ -6,8 +6,8 @@
 public class StateBones extends StateBase {
 
 
-	StateBones() {
-		
+	StateBones(Silhouette silhouette) {
+		super(silhouette);
 	}
 
 }

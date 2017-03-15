@@ -6,8 +6,8 @@
 public class StateBlood extends StateBase {
 
 
-	StateBlood() {
-		
+	StateBlood(Silhouette silhouette) {
+		super(silhouette);
 	}
 
 }

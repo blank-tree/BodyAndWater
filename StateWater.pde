@@ -6,8 +6,8 @@
 public class StateWater extends StateBase {
 
 
-	StateWater() {
-		
+	StateWater(Silhouette silhouette) {
+		super(silhouette);
 	}
 
 }
