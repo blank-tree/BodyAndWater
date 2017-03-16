@@ -4,10 +4,14 @@
  * @author: HALT Design - Simon Fischer and Fernando Obieta
  */
 
-import org.openkinect.processing.*;
+import KinectPV2.*;
+
+// SETTINGS
+final static boolean DEBUGGING = true;
+
 
 // Basic Variables
-Kinect2 kinect;
+KinectPV2 kinect;
 Silhouette silhouette;
 Noise noise;
 
@@ -19,12 +23,15 @@ StateDigestion stateDigestion;
 StateMuscles stateMuscles;
 StateWater stateWater;
 
+// Debugging
+Debug debug;
+
 void setup() {
 	size(1920, 1080, P3D);
 	background(0);
 
 	initKinect();
-	silhouette = new Silhouette();
+	silhouette = new Silhouette(kinect);
 	noise = new Noise();
 
 	// States
@@ -34,20 +41,39 @@ void setup() {
 	stateDigestion = new StateDigestion(silhouette);
 	stateMuscles = new StateMuscles(silhouette);
 	stateWater = new StateWater(silhouette);
+
+	// Debugging
+	debug = new Debug();
 }
 
 void draw() {
-	
+
+
+	// Debugging
+	if (DEBUGGING) {
+		debug.draw(silhouette);
+	}
 }
 
 void initKinect() {
-	kinect = new Kinect2(this);
-	kinect.initDevice();
-	kinect.initVideo();
-	kinect.initDevice();
+	kinect = new KinectPV2(this);
+	
+	// Settings
+	// kinect.enableDepthMaskImg(true);
+	// kinect.enableSkeletonDepthMap(true);
+
+	kinect.init();
 }
 
 void drawKinectImage() {
 	PImage videoImage = kinect.getVideoImage();
 	image(videoImage, 0, 0);
+}
+
+int decideState() {
+
+
+
+
+	return 0;
 }
