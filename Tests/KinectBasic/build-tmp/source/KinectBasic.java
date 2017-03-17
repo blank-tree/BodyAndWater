@@ -33,12 +33,12 @@ int minD = 50; //50cm
 
 public void setup() {
   
+  // fullScreen(P3D);
+
   opencv = new OpenCV(this, 512, 424);
   kinect = new KinectPV2(this);
 
-  kinect.enableDepthImg(true);
   kinect.enableBodyTrackImg(true);
-  kinect.enablePointCloud(true);
   kinect.enableDepthMaskImg(true);
   kinect.enableSkeletonDepthMap(true);
 
@@ -47,12 +47,15 @@ public void setup() {
 
 public void draw() {
   background(0);
-  scale(2);
+
+  text(frameRate, 50, 50);
+
+  scale(2.54717f); // scale from 424 to 
 
   drawContour();
   drawSkeleton();
 
-  text(frameRate, 50, 50);
+  
 }
 
 public void drawSkeleton() {
@@ -259,7 +262,7 @@ public void handState(int handState) {
     break;
   }
 }
-  public void settings() {  size(1024, 848, P3D); }
+  public void settings() {  size(1920, 1080, P3D); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "KinectBasic" };
     if (passedArgs != null) {

@@ -13,13 +13,13 @@ int maxD = 4500; //4.5m
 int minD = 50; //50cm
 
 void setup() {
-  size(1024, 848, P3D);
+  size(1920, 1080, P3D);
+  // fullScreen(P3D);
+
   opencv = new OpenCV(this, 512, 424);
   kinect = new KinectPV2(this);
 
-  kinect.enableDepthImg(true);
   kinect.enableBodyTrackImg(true);
-  kinect.enablePointCloud(true);
   kinect.enableDepthMaskImg(true);
   kinect.enableSkeletonDepthMap(true);
 
@@ -28,12 +28,15 @@ void setup() {
 
 void draw() {
   background(0);
-  scale(2);
+
+  text(frameRate, 50, 50);
+
+  scale(2.54717); // scale from 424 to 
 
   drawContour();
   drawSkeleton();
 
-  text(frameRate, 50, 50);
+  
 }
 
 void drawSkeleton() {
