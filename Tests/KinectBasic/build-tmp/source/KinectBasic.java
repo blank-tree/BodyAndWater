@@ -1,5 +1,24 @@
-import gab.opencv.*;
-import KinectPV2.*;
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import gab.opencv.*; 
+import KinectPV2.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class KinectBasic extends PApplet {
+
+
+
 
 KinectPV2 kinect;
 OpenCV opencv;
@@ -12,8 +31,8 @@ int threshold = 10;
 int maxD = 4500; //4.5m
 int minD = 50; //50cm
 
-void setup() {
-  size(1024, 848, P3D);
+public void setup() {
+  
   opencv = new OpenCV(this, 512, 424);
   kinect = new KinectPV2(this);
 
@@ -26,7 +45,7 @@ void setup() {
   kinect.init();
 }
 
-void draw() {
+public void draw() {
   background(0);
   scale(2);
 
@@ -36,7 +55,7 @@ void draw() {
   text(frameRate, 50, 50);
 }
 
-void drawSkeleton() {
+public void drawSkeleton() {
   kinect.getDepthMaskImage();
 
   //get the skeletons as an Arraylist of KSkeletons
@@ -49,7 +68,7 @@ void drawSkeleton() {
     if (skeleton.isTracked()) {
       KJoint[] joints = skeleton.getJoints();
 
-      color col  = skeleton.getIndexColor();
+      int col  = skeleton.getIndexColor();
       fill(col);
       stroke(col);
 
@@ -61,7 +80,7 @@ void drawSkeleton() {
 
 }
 
-void drawContour() {
+public void drawContour() {
   noFill();
   strokeWeight(3);
 
@@ -108,7 +127,7 @@ void drawContour() {
 }
 
 
-void keyPressed() {
+public void keyPressed() {
   if (key == 'a') {
     threshold+=1;
   }
@@ -133,16 +152,16 @@ void keyPressed() {
   }
 
   if (key == '5') {
-    polygonFactor += 0.1;
+    polygonFactor += 0.1f;
   }
 
   if (key == '6') {
-    polygonFactor -= 0.1;
+    polygonFactor -= 0.1f;
   }
 }
 
 //draw the body
-void drawBody(KJoint[] joints) {
+public void drawBody(KJoint[] joints) {
   drawBone(joints, KinectPV2.JointType_Head, KinectPV2.JointType_Neck);
   drawBone(joints, KinectPV2.JointType_Neck, KinectPV2.JointType_SpineShoulder);
   drawBone(joints, KinectPV2.JointType_SpineShoulder, KinectPV2.JointType_SpineMid);
@@ -189,7 +208,7 @@ void drawBody(KJoint[] joints) {
 }
 
 //draw a single joint
-void drawJoint(KJoint[] joints, int jointType) {
+public void drawJoint(KJoint[] joints, int jointType) {
   pushMatrix();
   translate(joints[jointType].getX(), joints[jointType].getY(), joints[jointType].getZ());
   ellipse(0, 0, 25, 25);
@@ -197,7 +216,7 @@ void drawJoint(KJoint[] joints, int jointType) {
 }
 
 //draw a bone from two joints
-void drawBone(KJoint[] joints, int jointType1, int jointType2) {
+public void drawBone(KJoint[] joints, int jointType1, int jointType2) {
   pushMatrix();
   translate(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ());
   ellipse(0, 0, 25, 25);
@@ -206,7 +225,7 @@ void drawBone(KJoint[] joints, int jointType1, int jointType2) {
 }
 
 //draw a ellipse depending on the hand state
-void drawHandState(KJoint joint) {
+public void drawHandState(KJoint joint) {
   noStroke();
   handState(joint.getState());
   pushMatrix();
@@ -224,7 +243,7 @@ Different hand state
  */
 
 //Depending on the hand state change the color
-void handState(int handState) {
+public void handState(int handState) {
   switch(handState) {
   case KinectPV2.HandState_Open:
     fill(0, 255, 0);
@@ -238,5 +257,15 @@ void handState(int handState) {
   case KinectPV2.HandState_NotTracked:
     fill(100, 100, 100);
     break;
+  }
+}
+  public void settings() {  size(1024, 848, P3D); }
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "KinectBasic" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
   }
 }

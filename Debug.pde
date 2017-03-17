@@ -15,8 +15,9 @@ public class Debug {
 	}
 
 	public void draw(Silhouette silhouette) {
-		textInformation(silhouette);
+		checkKeys();
 		skeletons(silhouette);
+		textInformation(silhouette);
 	}
 
 	private void textInformation(Silhouette silhouette) {
@@ -27,8 +28,9 @@ public class Debug {
 			stroke(255);
 			fill(0);
 			textSize(12);
-			text("Framerate: " + frameRate, 15, 15);
-			text("Skeletons: " + displaySkeletons ? "on" : "off", 15, 30);
+			text("Framerate: " + frameRate, 15, 30);
+			String areSkeletonsDisplayed = displaySkeletons ? "on" : "off";
+			text("Skeletons: " + areSkeletonsDisplayed, 15, 50);
 		}
 	}
 

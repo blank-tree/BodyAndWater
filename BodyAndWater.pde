@@ -48,6 +48,9 @@ void setup() {
 
 void draw() {
 
+	background(0);
+
+	silhouette.update();
 
 	// Debugging
 	if (DEBUGGING) {
@@ -57,17 +60,17 @@ void draw() {
 
 void initKinect() {
 	kinect = new KinectPV2(this);
-	
+
 	// Settings
-	// kinect.enableDepthMaskImg(true);
-	// kinect.enableSkeletonDepthMap(true);
+	kinect.enableDepthMaskImg(true);
+	kinect.enableSkeletonDepthMap(true);
 
 	kinect.init();
 }
 
 void drawKinectImage() {
-	PImage videoImage = kinect.getVideoImage();
-	image(videoImage, 0, 0);
+	// PImage videoImage = kinect.getVideoImage();
+	// image(videoImage, 0, 0);
 }
 
 int decideState() {

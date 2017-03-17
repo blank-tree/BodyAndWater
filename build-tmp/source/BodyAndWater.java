@@ -1,3 +1,167 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import KinectPV2.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class BodyAndWater extends PApplet {
+
+/**
+ * BodyAndWater - MainClass
+ * Spatial Interaction Project 2017 - ZHdK IAD15
+ * @author: HALT Design - Simon Fischer and Fernando Obieta
+ */
+
+
+
+// SETTINGS
+final static boolean DEBUGGING = true;
+
+
+// Basic Variables
+KinectPV2 kinect;
+Silhouette silhouette;
+Noise noise;
+
+// States
+int currentState;
+StateBlood stateBlood;
+StateBones stateBones;
+StateDigestion stateDigestion;
+StateMuscles stateMuscles;
+StateWater stateWater;
+
+// Debugging
+Debug debug;
+
+public void setup() {
+	
+	background(0);
+
+	initKinect();
+	silhouette = new Silhouette(kinect);
+	noise = new Noise();
+
+	// States
+	currentState = 0;
+	stateBlood = new StateBlood(silhouette);
+	stateBones = new StateBones(silhouette);
+	stateDigestion = new StateDigestion(silhouette);
+	stateMuscles = new StateMuscles(silhouette);
+	stateWater = new StateWater(silhouette);
+
+	// Debugging
+	debug = new Debug();
+}
+
+public void draw() {
+
+	background(0);
+
+	silhouette.update();
+
+	// Debugging
+	if (DEBUGGING) {
+		debug.draw(silhouette);
+	}
+}
+
+public void initKinect() {
+	kinect = new KinectPV2(this);
+
+	// Settings
+	kinect.enableDepthMaskImg(true);
+	kinect.enableSkeletonDepthMap(true);
+
+	kinect.init();
+}
+
+public void drawKinectImage() {
+	// PImage videoImage = kinect.getVideoImage();
+	// image(videoImage, 0, 0);
+}
+
+public int decideState() {
+
+
+
+
+	return 0;
+}
+/**
+* Debug Class
+* Only for development to display information about the current state and switch states and debug modes with the keyboard
+* @author: HALT Design - Simon Fischer and Fernando Obieta
+*/
+
+public class Debug {
+
+	private boolean displayText;
+	private boolean displaySkeletons;
+
+	public Debug() {
+		displayText = false;
+		displaySkeletons = false;
+	}
+
+	public void draw(Silhouette silhouette) {
+		checkKeys();
+		skeletons(silhouette);
+		textInformation(silhouette);
+	}
+
+	private void textInformation(Silhouette silhouette) {
+		if (displayText) {
+			noStroke();
+			fill(255);
+			rect(10, 10, 150, 50);
+			stroke(255);
+			fill(0);
+			textSize(12);
+			text("Framerate: " + frameRate, 15, 30);
+			String areSkeletonsDisplayed = displaySkeletons ? "on" : "off";
+			text("Skeletons: " + areSkeletonsDisplayed, 15, 50);
+		}
+	}
+
+	private void skeletons(Silhouette silhouette) {
+		if (displaySkeletons) {
+			silhouette.drawSkeletons();
+		}
+	}
+
+	private void checkKeys() {
+		if (keyPressed == true) {
+			if (key == 'i' || key == 'I') {
+				displayText = !displayText;
+			}
+			if (key == 's' || key == 'S') {
+				displaySkeletons = !displaySkeletons;
+			}
+		}
+	}
+}
+/**
+ * Noise Class
+ * @author: HALT Design - Simon Fischer and Fernando Obieta
+ */
+
+public class Noise {
+
+	Noise() {
+		
+	}
+}
 /**
 * Silhouette Class
 *
@@ -28,7 +192,7 @@ public class Silhouette {
 			if (skeleton.isTracked()) {
 				KJoint[] joints = skeleton.getJoints();
 
-				color col  = skeleton.getIndexColor();
+				int col  = skeleton.getIndexColor();
 				fill(col);
 				stroke(col);
 
@@ -140,4 +304,103 @@ public class Silhouette {
 	}
 
 
+}
+/**
+ * StateBase Class
+ * Class for the other states to extend with all the basics
+ * @author: HALT Design - Simon Fischer and Fernando Obieta
+ */
+
+public class StateBase {
+
+	Silhouette silhouette;
+	float fadeState;
+
+	StateBase(Silhouette silhouette) {
+		this.silhouette = silhouette;
+		fadeState = 0;
+	}
+
+	public void draw() {
+
+	}
+
+	public void fade() {
+
+	}
+}
+/**
+ * StateBlood Class
+ * @author: HALT Design - Simon Fischer and Fernando Obieta
+ */
+
+public class StateBlood extends StateBase {
+
+
+	StateBlood(Silhouette silhouette) {
+		super(silhouette);
+	}
+
+}
+/**
+ * StateBones Class
+ * @author: HALT Design - Simon Fischer and Fernando Obieta
+ */
+
+public class StateBones extends StateBase {
+
+
+	StateBones(Silhouette silhouette) {
+		super(silhouette);
+	}
+
+}
+/**
+ * StateDigestion Class
+ * @author: HALT Design - Simon Fischer and Fernando Obieta
+ */
+
+public class StateDigestion extends StateBase {
+
+
+	StateDigestion(Silhouette silhouette) {
+		super(silhouette);
+	}
+
+}
+/**
+ * StateMuscles Class
+ * @author: HALT Design - Simon Fischer and Fernando Obieta
+ */
+
+public class StateMuscles extends StateBase {
+
+
+	StateMuscles(Silhouette silhouette) {
+		super(silhouette);
+	}
+
+}
+/**
+ * StateWater Class
+ * @author: HALT Design - Simon Fischer and Fernando Obieta
+ */
+
+public class StateWater extends StateBase {
+
+
+	StateWater(Silhouette silhouette) {
+		super(silhouette);
+	}
+
+}
+  public void settings() { 	size(1920, 1080, P3D); }
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "BodyAndWater" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
 }
