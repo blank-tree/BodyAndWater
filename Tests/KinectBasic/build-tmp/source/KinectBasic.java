@@ -31,6 +31,9 @@ int threshold = 10;
 int maxD = 4500; //4.5m
 int minD = 50; //50cm
 
+
+PShape ellbow_r;
+
 public void setup() {
   
   // fullScreen(P3D);
@@ -43,6 +46,9 @@ public void setup() {
   kinect.enableSkeletonDepthMap(true);
 
   kinect.init();
+
+  ellbow_r = loadShape("foo.svg");
+
 }
 
 public void draw() {
@@ -208,6 +214,8 @@ public void drawBody(KJoint[] joints) {
   drawJoint(joints, KinectPV2.JointType_ThumbRight);
 
   drawJoint(joints, KinectPV2.JointType_Head);
+
+  drawSvg(joints, KinectPV2.JointType_ElbowLeft, KinectPV2.JointType_WristLeft);
 }
 
 //draw a single joint
@@ -261,6 +269,31 @@ public void handState(int handState) {
     fill(100, 100, 100);
     break;
   }
+}
+
+//draw a bone from two joints
+public void drawSvg(KJoint[] joints, int jointType1, int jointType2) {
+
+  //create two PVectors with the X and Y of both jointTypes
+  PVector joint1 = new PVector(joints[jointType1].getX(), joints[jointType1].getY());
+  PVector joint2 = new PVector(joints[jointType2].getX(), joints[jointType2].getY());
+
+  PVector matu = new PVector(joint1.x - joint2.x, joint1.y - joint2.y);
+  float foobar = -atan2(matu.x, matu.y);
+
+  //draw the svg
+  pushMatrix();
+
+  //translates the Matrix a position
+  translate(joint1.x, joint1.y);
+
+  //rotates according to the two joint positions (in 2D)
+  rotate(foobar);
+
+  //draw the shape
+  shape(ellbow_r, 0, 0);
+
+  popMatrix();
 }
   public void settings() {  size(1920, 1080, P3D); }
   static public void main(String[] passedArgs) {
