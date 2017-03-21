@@ -1,5 +1,24 @@
-import gab.opencv.*;
-import KinectPV2.*;
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import gab.opencv.*; 
+import KinectPV2.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class KinectBasic extends PApplet {
+
+
+
 
 KinectPV2 kinect;
 OpenCV opencv;
@@ -32,9 +51,9 @@ _foot_l, _foot_r;
 
 int _distance;
 
-void setup() {
+public void setup() {
   //fullScreen();
-  size(1920, 1080, P3D);
+  
   // fullScreen(P3D);
 
   opencv = new OpenCV(this, 512, 424);
@@ -74,19 +93,19 @@ void setup() {
 
 }
 
-void draw() {
+public void draw() {
   background(0);
 
   //text(frameRate, 50, 50);
 
-  scale(2.54717); // scale from 424 to 1080
+  scale(2.54717f); // scale from 424 to 1080
 
   drawContour();
   drawSkeleton();
   // printDepthData();
 }
 
-void drawSkeleton() {
+public void drawSkeleton() {
 
   kinect.getDepthMaskImage();
 
@@ -102,7 +121,7 @@ void drawSkeleton() {
     if (skeleton.isTracked()) {
       KJoint[] joints = skeleton.getJoints();
 
-      color col  = skeleton.getIndexColor();
+      int col  = skeleton.getIndexColor();
       fill(col);
       stroke(col);
 
@@ -114,7 +133,7 @@ void drawSkeleton() {
 
 }
 
-void drawContour() {
+public void drawContour() {
   noFill();
   strokeWeight(3);
 
@@ -161,7 +180,7 @@ void drawContour() {
 }
 
 
-void keyPressed() {
+public void keyPressed() {
   if (key == 'a') {
     threshold+=1;
   }
@@ -186,16 +205,16 @@ void keyPressed() {
   }
 
   if (key == '5') {
-    polygonFactor += 0.1;
+    polygonFactor += 0.1f;
   }
 
   if (key == '6') {
-    polygonFactor -= 0.1;
+    polygonFactor -= 0.1f;
   }
 }
 
 //draw the body
-void drawBody(KJoint[] joints, int[] rawData) {
+public void drawBody(KJoint[] joints, int[] rawData) {
   // drawBone(joints, KinectPV2.JointType_Head, KinectPV2.JointType_Neck);
   // drawBone(joints, KinectPV2.JointType_Neck, KinectPV2.JointType_SpineShoulder);
   // drawBone(joints, KinectPV2.JointType_SpineShoulder, KinectPV2.JointType_SpineMid);
@@ -248,7 +267,7 @@ void drawBody(KJoint[] joints, int[] rawData) {
 }
 
 //draw a single joint
-void drawJoint(KJoint[] joints, int jointType) {
+public void drawJoint(KJoint[] joints, int jointType) {
   pushMatrix();
   translate(joints[jointType].getX(), joints[jointType].getY(), joints[jointType].getZ());
   ellipse(0, 0, 25, 25);
@@ -256,7 +275,7 @@ void drawJoint(KJoint[] joints, int jointType) {
 }
 
 //draw a bone from two joints
-void drawBone(KJoint[] joints, int jointType1, int jointType2) {
+public void drawBone(KJoint[] joints, int jointType1, int jointType2) {
   pushMatrix();
   translate(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ());
   ellipse(0, 0, 25, 25);
@@ -265,7 +284,7 @@ void drawBone(KJoint[] joints, int jointType1, int jointType2) {
 }
 
 //draw a ellipse depending on the hand state
-void drawHandState(KJoint joint) {
+public void drawHandState(KJoint joint) {
   noStroke();
   handState(joint.getState());
   pushMatrix();
@@ -283,7 +302,7 @@ Different hand state
  */
 
 //Depending on the hand state change the color
-void handState(int handState) {
+public void handState(int handState) {
   switch(handState) {
   case KinectPV2.HandState_Open:
     fill(0, 255, 0);
@@ -300,7 +319,7 @@ void handState(int handState) {
   }
 }
 
-void drawSvgJoint(KJoint[] _joints, int _jointType, int _jointTypeRot, PShape _theShape, int[] _rawData, float _rot_fix) {
+public void drawSvgJoint(KJoint[] _joints, int _jointType, int _jointTypeRot, PShape _theShape, int[] _rawData, float _rot_fix) {
 
   // 1 main joint, 1 support joint for rotation
   PVector joint1 = new PVector(_joints[_jointType].getX(), _joints[_jointType].getY());
@@ -309,7 +328,7 @@ void drawSvgJoint(KJoint[] _joints, int _jointType, int _jointTypeRot, PShape _t
   PVector matu = new PVector(joint1.x - joint2.x, joint1.y - joint2.y);
   float rot = -atan2(matu.x, matu.y) + _rot_fix;
 
-  _distance = _rawData[min(max(int(joint1.y) * 512 + int(joint1.x), 0), _rawData.length)];
+  _distance = _rawData[min(max(PApplet.parseInt(joint1.y) * 512 + PApplet.parseInt(joint1.x), 0), _rawData.length)];
   float _scale = pow(2, map(_distance, 0, 4500, 3, 0))/12;
 
   //draw the svg
@@ -325,7 +344,7 @@ void drawSvgJoint(KJoint[] _joints, int _jointType, int _jointTypeRot, PShape _t
 
 }
 
-void drawSvgBone(KJoint[] _joints, int _jointType1, int _jointType2, PShape _theShape, int[] _rawData, float _rot_fix) {
+public void drawSvgBone(KJoint[] _joints, int _jointType1, int _jointType2, PShape _theShape, int[] _rawData, float _rot_fix) {
 
   // 2 main joint, draw svg inbetween
   PVector joint1 = new PVector(_joints[_jointType1].getX(), _joints[_jointType1].getY());
@@ -334,9 +353,9 @@ void drawSvgBone(KJoint[] _joints, int _jointType1, int _jointType2, PShape _the
   PVector matu = new PVector(joint1.x - joint2.x, joint1.y - joint2.y);
   float rot = -atan2(matu.x, matu.y) + _rot_fix;
 
-  _distance = _rawData[min(max(int(joint1.y) * 512 + int(joint1.x), 0), _rawData.length)];
+  _distance = _rawData[min(max(PApplet.parseInt(joint1.y) * 512 + PApplet.parseInt(joint1.x), 0), _rawData.length)];
   float _scaleX = pow(2, map(_distance, 0, 4500, 3, 0))/12;
-  float _scaleY = pow(2, map(_distance, 0, 4500, 3, 0))/12 * map(dist(joint1.x, joint1.y, joint2.x, joint2.y), 0, 100, 0.3, 1);
+  float _scaleY = pow(2, map(_distance, 0, 4500, 3, 0))/12 * map(dist(joint1.x, joint1.y, joint2.x, joint2.y), 0, 100, 0.3f, 1);
 
   //draw the svg
   pushMatrix();
@@ -352,11 +371,21 @@ void drawSvgBone(KJoint[] _joints, int _jointType1, int _jointType2, PShape _the
 }
 
 
-void printDepthData() {
+public void printDepthData() {
   int [] rawData = kinect.getRawDepthData();
 
   for (int i = 0; i < rawData.length; ++i) {
     println(i + " " + rawData[i]);
   }
 
+}
+  public void settings() {  size(1920, 1080, P3D); }
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "KinectBasic" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
 }
