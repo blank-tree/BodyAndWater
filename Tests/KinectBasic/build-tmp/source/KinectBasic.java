@@ -31,23 +31,66 @@ int threshold = 10;
 int maxD = 4500; //4.5m
 int minD = 50; //50cm
 
+//Create pshapes for single elements
+//Skeleton
+PShape 
+_skull, 
+_neck, 
+_upperspine, 
+_lowerspine,
+_shoulder_l, _shoulder_r,
+_upperarm_l, _upperarm_r,
+_forearm_l, _forearm_r,
+_hand_l, _hand_r,
+_ribcage,
+_hip,
+_thigh_l, _thigh_r,
+_knee_l, _knee_r,
+_shin_l, _shin_r,
+_foot_l, _foot_r;
 
-PShape ellbow_r;
+int _distance;
 
 public void setup() {
   
   // fullScreen(P3D);
 
-  opencv = new OpenCV(this, 512, 424);
-  kinect = new KinectPV2(this);
+  opencv = new OpenCV(this, 512, 424);  
+  kinect = new KinectPV2(this);                                                        
 
   kinect.enableBodyTrackImg(true);
   kinect.enableDepthMaskImg(true);
   kinect.enableSkeletonDepthMap(true);
+  kinect.enableSkeleton3DMap(true);
+
 
   kinect.init();
 
-  ellbow_r = loadShape("foo.svg");
+  String pathSkeleton = "bodyTypes/skeleton/";
+  _skull = loadShape(pathSkeleton + "skull.svg");
+  _ribcage = loadShape(pathSkeleton + "ribcage.svg");
+
+// _neck = skeleton.getChild("neck");
+// _upperspine = skeleton.getId("");
+// _lowerspine = skeleton.getChild("");
+// _shoulder_l = skeleton.getChild("");
+// _shoulder_r = skeleton.getChild("");
+// _upperarm_l = skeleton.getChild("");
+// _upperarm_r = skeleton.getChild("");
+// _forearm_l = skeleton.getChild("");
+// _forearm_r = skeleton.getChild("");
+// _hand_l = skeleton.getChild("");
+// _hand_r = skeleton.getChild("");
+// _ribcage = skeleton.getChild("");
+// _hip = skeleton.getChild("");
+// _thigh_l = skeleton.getChild("");
+// _thigh_r = skeleton.getChild("");
+// _knee_l = skeleton.getChild("");
+// _knee_r = skeleton.getChild("");
+// _shin_l = skeleton.getChild("");
+// _shin_r = skeleton.getChild("");
+// _foot_l = skeleton.getChild("");
+// _foot_r = skeleton.getChild("");
 
 }
 
@@ -60,20 +103,22 @@ public void draw() {
 
   drawContour();
   drawSkeleton();
-
-  
+  // printDepthData();
 }
 
 public void drawSkeleton() {
+
   kinect.getDepthMaskImage();
 
-  //get the skeletons as an Arraylist of KSkeletons
+  //get the skeletons as an ArrayList of KSkeletons
   ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonDepthMap();
+
+  int [] rawData = kinect.getRawDepthData();
 
   //individual joints
   for (int i = 0; i < skeletonArray.size(); i++) {
     KSkeleton skeleton = (KSkeleton) skeletonArray.get(i);
-    //if the skeleton is being tracked compute the skleton joints
+    //if the skeleton is being tracked compute the skeleton joints
     if (skeleton.isTracked()) {
       KJoint[] joints = skeleton.getJoints();
 
@@ -81,7 +126,7 @@ public void drawSkeleton() {
       fill(col);
       stroke(col);
 
-      drawBody(joints);
+      drawBody(joints, rawData);
       drawHandState(joints[KinectPV2.JointType_HandRight]);
       drawHandState(joints[KinectPV2.JointType_HandLeft]);
     }
@@ -170,7 +215,7 @@ public void keyPressed() {
 }
 
 //draw the body
-public void drawBody(KJoint[] joints) {
+public void drawBody(KJoint[] joints, int[] rawData) {
   drawBone(joints, KinectPV2.JointType_Head, KinectPV2.JointType_Neck);
   drawBone(joints, KinectPV2.JointType_Neck, KinectPV2.JointType_SpineShoulder);
   drawBone(joints, KinectPV2.JointType_SpineShoulder, KinectPV2.JointType_SpineMid);
@@ -215,7 +260,9 @@ public void drawBody(KJoint[] joints) {
 
   drawJoint(joints, KinectPV2.JointType_Head);
 
-  drawSvg(joints, KinectPV2.JointType_ElbowLeft, KinectPV2.JointType_WristLeft);
+  drawSvg(joints, KinectPV2.JointType_Head, KinectPV2.JointType_Neck, _skull, rawData, 15);
+  drawSvg(joints, KinectPV2.JointType_SpineMid, KinectPV2.JointType_Neck, _ribcage, rawData, 15);
+
 }
 
 //draw a single joint
@@ -272,7 +319,7 @@ public void handState(int handState) {
 }
 
 //draw a bone from two joints
-public void drawSvg(KJoint[] joints, int jointType1, int jointType2) {
+public void drawSvg(KJoint[] joints, int jointType1, int jointType2, PShape theShape, int[] rawData, float _size_fix) {
 
   //create two PVectors with the X and Y of both jointTypes
   PVector joint1 = new PVector(joints[jointType1].getX(), joints[jointType1].getY());
@@ -281,9 +328,13 @@ public void drawSvg(KJoint[] joints, int jointType1, int jointType2) {
   PVector matu = new PVector(joint1.x - joint2.x, joint1.y - joint2.y);
   float foobar = -atan2(matu.x, matu.y);
 
+  if (rawData != null) {
+    _distance = rawData[max(0,PApplet.parseInt(joint1.y)) * 512 + max(PApplet.parseInt(joint1.x), 0)];
+  }
+  float _scale = pow(2, map(_distance, 0, 4500, 3, 0))/_size_fix;
+
   //draw the svg
   pushMatrix();
-
   //translates the Matrix a position
   translate(joint1.x, joint1.y);
 
@@ -291,11 +342,28 @@ public void drawSvg(KJoint[] joints, int jointType1, int jointType2) {
   rotate(foobar);
 
   //draw the shape
-  shape(ellbow_r, 0, 0);
+  shapeMode(CENTER);
+  scale(_scale);
+  shape(theShape, 0, 0);
+  scale(1);
+  shapeMode(CORNER);
+
+  // println(joint1.x + " - " + joint1.y + " - " + joint1.z);
+
+  println(_distance + " ... " + _scale);
 
   popMatrix();
 }
-  public void settings() {  size(1920, 1080, P3D); }
+
+public void printDepthData() {
+  int [] rawData = kinect.getRawDepthData();
+
+  for (int i = 0; i < rawData.length; ++i) {
+    println(i + " " + rawData[i]);
+  }
+
+}
+  public void settings() {  size(800, 500, P3D); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "KinectBasic" };
     if (passedArgs != null) {
