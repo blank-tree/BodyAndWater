@@ -195,8 +195,8 @@ void keyPressed() {
 
 //draw the body
 void drawBody(KJoint[] joints, int[] rawData) {
-  drawBone(joints, KinectPV2.JointType_Head, KinectPV2.JointType_Neck);
-  drawBone(joints, KinectPV2.JointType_Neck, KinectPV2.JointType_SpineShoulder);
+  // drawBone(joints, KinectPV2.JointType_Head, KinectPV2.JointType_Neck);
+  // drawBone(joints, KinectPV2.JointType_Neck, KinectPV2.JointType_SpineShoulder);
   // drawBone(joints, KinectPV2.JointType_SpineShoulder, KinectPV2.JointType_SpineMid);
   // drawBone(joints, KinectPV2.JointType_SpineMid, KinectPV2.JointType_SpineBase);
   // drawBone(joints, KinectPV2.JointType_SpineShoulder, KinectPV2.JointType_ShoulderRight);
@@ -206,14 +206,14 @@ void drawBody(KJoint[] joints, int[] rawData) {
   //
   // // Right Arm
   // drawBone(joints, KinectPV2.JointType_ShoulderRight, KinectPV2.JointType_ElbowRight);
-  drawBone(joints, KinectPV2.JointType_ElbowRight, KinectPV2.JointType_WristRight);
+  // drawBone(joints, KinectPV2.JointType_ElbowRight, KinectPV2.JointType_WristRight);
   // drawBone(joints, KinectPV2.JointType_WristRight, KinectPV2.JointType_HandRight);
   // drawBone(joints, KinectPV2.JointType_HandRight, KinectPV2.JointType_HandTipRight);
   // drawBone(joints, KinectPV2.JointType_WristRight, KinectPV2.JointType_ThumbRight);
   //
   // // Left Arm
   // drawBone(joints, KinectPV2.JointType_ShoulderLeft, KinectPV2.JointType_ElbowLeft);
-  drawBone(joints, KinectPV2.JointType_ElbowLeft, KinectPV2.JointType_WristLeft);
+  // drawBone(joints, KinectPV2.JointType_ElbowLeft, KinectPV2.JointType_WristLeft);
   // drawBone(joints, KinectPV2.JointType_WristLeft, KinectPV2.JointType_HandLeft);
   // drawBone(joints, KinectPV2.JointType_HandLeft, KinectPV2.JointType_HandTipLeft);
   // drawBone(joints, KinectPV2.JointType_WristLeft, KinectPV2.JointType_ThumbLeft);
@@ -240,7 +240,6 @@ void drawBody(KJoint[] joints, int[] rawData) {
   // drawJoint(joints, KinectPV2.JointType_Head);
 
 
-  drawSvgRib(joints, KinectPV2.JointType_SpineShoulder, KinectPV2.JointType_ShoulderRight, KinectPV2.JointType_ShoulderLeft, _ribcage, rawData, PI);
   // Draw the SVGs:     joint 1                             joint 2                             grahic        rawData   rot fix   scale fix   pos fix
   // thigh
   drawBoneSvg(joints,   KinectPV2.JointType_HipLeft,        KinectPV2.JointType_KneeLeft,       _thigh_l,     rawData,  PI,       1,          new PVector(0,0));
@@ -248,7 +247,7 @@ void drawBody(KJoint[] joints, int[] rawData) {
   // lower spine
   drawBoneSvg(joints,   KinectPV2.JointType_SpineMid,       KinectPV2.JointType_SpineBase,      _lowerspine,  rawData,  PI,       1,          new PVector(0,0));
   // neck
-  drawBoneSvg(joints,   KinectPV2.JointType_Neck,           KinectPV2.JointType_SpineShoulder,  _neck,        rawData,  PI,       1,          new PVector(0,0));
+  drawJointSvg(joints,  KinectPV2.JointType_Neck,           KinectPV2.JointType_SpineShoulder,  _neck,        rawData,  PI,       1,          0);
   // upper arm
   drawBoneSvg(joints,   KinectPV2.JointType_ShoulderLeft,   KinectPV2.JointType_ElbowLeft,      _upperarm_l,  rawData,  PI,       1,          new PVector(0,0));
   drawBoneSvg(joints,   KinectPV2.JointType_ShoulderRight,  KinectPV2.JointType_ElbowRight,     _upperarm_r,  rawData,  PI,       1,          new PVector(0,0));
@@ -259,7 +258,7 @@ void drawBody(KJoint[] joints, int[] rawData) {
   drawBoneSvg(joints,   KinectPV2.JointType_KneeLeft,       KinectPV2.JointType_AnkleLeft,      _shin_l,      rawData,  PI,       1,          new PVector(0,0));
   drawBoneSvg(joints,   KinectPV2.JointType_KneeRight,      KinectPV2.JointType_AnkleRight,     _shin_r,      rawData,  PI,       1,          new PVector(0,0));
   // ribcage
-  // drawSvgRib(joints,    KinectPV2.JointType_KneeLeft,       KinectPV2.JointType_AnkleLeft,      _shin_l,      rawData,  PI,       1,          new PVector(0,0))
+  drawRibSvg(joints, KinectPV2.JointType_SpineShoulder, KinectPV2.JointType_SpineMid, KinectPV2.JointType_ShoulderLeft, KinectPV2.JointType_ShoulderRight, _ribcage, rawData, 0, 0);
   // shoulder
   drawBoneSvg(joints,   KinectPV2.JointType_SpineShoulder,  KinectPV2.JointType_ShoulderLeft,   _shoulder_l,  rawData,  PI,       1,          new PVector(0,0));
   drawBoneSvg(joints,   KinectPV2.JointType_SpineShoulder,  KinectPV2.JointType_ShoulderRight,  _shoulder_r,  rawData,  PI,       1,          new PVector(0,0));
@@ -329,14 +328,14 @@ void handState(int handState) {
   }
 }
 
-void drawRibSvg(KJoint[] _joints, int _jointType1, int _jointType2, int _jointType3, PShape _theShape, int[] _rawData, float _rot_fix) {
+void drawRibSvg(KJoint[] _joints, int _jointType1, int _jointType2, int _jointType3, int _jointType4, PShape _theShape, int[] _rawData, float _rot_fix, float _pos_fix) {
 
-  // 2 main joint, draw svg inbetween
   PVector joint1 = new PVector(_joints[_jointType1].getX(), _joints[_jointType1].getY());
   PVector joint2 = new PVector(_joints[_jointType2].getX(), _joints[_jointType2].getY());
   PVector joint3 = new PVector(_joints[_jointType3].getX(), _joints[_jointType3].getY());
+  PVector joint4 = new PVector(_joints[_jointType4].getX(), _joints[_jointType4].getY());
 
-  PVector matu = new PVector(joint2.x - joint3.x, joint2.y - joint3.y);
+  PVector matu = new PVector(joint3.x - joint4.x, joint3.y - joint4.y);
   float rot = -atan2(matu.x, matu.y) + _rot_fix - PI/2;
 
   _distance = _rawData[min(max(int(joint1.y) * 512 + int(joint1.x), 0), _rawData.length)];
@@ -345,11 +344,11 @@ void drawRibSvg(KJoint[] _joints, int _jointType1, int _jointType2, int _jointTy
   //draw the svg
   pushMatrix();
   shapeMode(CENTER);
-  translate(joint1.x, joint1.y);
+  translate((joint1.x+joint2.x)/2, (joint1.y+joint2.y)/2);
   rotate(rot);
-  translate(0, 15);
+  translate(0, _pos_fix);
   scale(_scale);
-  shape(_theShape, 0, 80);
+  shape(_theShape, 0, 0);
   scale(1);
   shapeMode(CORNER);
   popMatrix();
