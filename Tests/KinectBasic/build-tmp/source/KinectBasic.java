@@ -357,7 +357,7 @@ public void drawRibSvg(KJoint[] _joints, int _jointType1, int _jointType2, int _
   PVector matu = new PVector(joint3.x - joint4.x, joint3.y - joint4.y);
   float rot = -atan2(matu.x, matu.y) + _rot_fix - PI/2;
 
-  _distance = _rawData[min(max(PApplet.parseInt(joint1.y) * 512 + PApplet.parseInt(joint1.x), 0), _rawData.length)];
+  _distance = _rawData[min(max(PApplet.parseInt(joint1.y) * 512 + PApplet.parseInt(joint1.x), 0), _rawData.length - 1)];
   float _scale = pow(2, map(_distance, 0, 4500, 4, 1))/24;
 
   //draw the svg
@@ -382,7 +382,7 @@ public void drawBoneSvg(KJoint[] _joints, int _jointType1, int _jointType2, PSha
   PVector matu = new PVector(joint1.x - joint2.x, joint1.y - joint2.y);
   float rot = -atan2(matu.x, matu.y) + _rot_fix;
 
-  _distance = _rawData[min(max(PApplet.parseInt(joint1.y) * 512 + PApplet.parseInt(joint1.x), 0), _rawData.length)];
+  _distance = _rawData[min(max(PApplet.parseInt(joint1.y) * 512 + PApplet.parseInt(joint1.x), 0), _rawData.length - 1)];
   float _scaleX = pow(2, map(_distance, 0, 4500, 4, 1))/24;
   float _scaleY = pow(2, map(_distance, 0, 4500, 4, 1))/24 * map(dist(joint1.x, joint1.y, joint2.x, joint2.y), 0, 80, 0.3f, 1.1f);
 
@@ -408,7 +408,7 @@ public void drawJointSvg(KJoint[] _joints, int _jointType1, int _jointType2, PSh
   PVector matu = new PVector(joint1.x - joint2.x, joint1.y - joint2.y);
   float rot = -atan2(matu.x, matu.y) + _rot_fix;
 
-  _distance = _rawData[min(max(PApplet.parseInt(joint1.y) * 512 + PApplet.parseInt(joint1.x), 0), _rawData.length-1)];
+  _distance = _rawData[min(max(PApplet.parseInt(joint1.y) * 512 + PApplet.parseInt(joint1.x), 0), _rawData.length - 1)];
   float _scale = pow(2, map(_distance, 0, 4500, 4, 1))/24;
 
   pushMatrix();
