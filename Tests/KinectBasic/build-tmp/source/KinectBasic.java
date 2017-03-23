@@ -95,13 +95,14 @@ public void setup() {
 public void draw() {
   background(0);
 
-  //text(frameRate, 50, 50);
 
   scale(2.54717f); // scale from 424 to 1080
 
-  // drawContour();
-  drawSkeleton();
+  drawContour();
+  // drawSkeleton();
   // printDepthData();
+  fill(255);
+  text(frameRate, 50, 50);
 }
 
 public void drawSkeleton() {
@@ -141,6 +142,8 @@ public void drawContour() {
   opencv.invert();
   opencv.threshold(threshold);
   PImage dst = opencv.getOutput();
+  // image(getCorrectedMask(dst), 0, 0);
+  image(dst, 0, 0);
 
   ArrayList<Contour> contours = opencv.findContours(false, false);
 
@@ -160,9 +163,12 @@ public void drawContour() {
         }
         contourShape.endShape();
       }
-      shape(contourShape,0,0);
+      // shape(contourShape,0,0);
+
     }
+
   }
+
 
   // noStroke();
 
@@ -432,6 +438,58 @@ public void printDepthData() {
     println(i + " " + rawData[i]);
   }
 
+}
+
+
+final static int NEIGHBORS_THRESHOLD = 3;
+
+public PImage getCorrectedMask(PImage dst) {
+  dst.loadPixels();
+  PImage ri = createImage(512, 424, RGB);
+  ri.loadPixels();
+
+  for (int cY = 0; cY < 424; ++cY) {
+    for (int cX = 0; cX < 512; ++cX) {
+      if (dst.pixels[cY * 512 + cX] == color(255,255,255)) {
+
+        float colorGradient = checkNeighbors(dst, cX, cY);
+        colorGradient = map(colorGradient, 0, 9, 0, 255);
+        ri.pixels[cY * 512 + cX] = color(colorGradient);
+
+        if (cY == 212 && cX == 256) {
+          println(checkNeighbors(dst, cX, cY));
+        }
+      }
+    }
+  }
+
+
+  // ri.filter(INVERT);
+  ri.updatePixels();
+  return ri;
+
+}
+
+public int checkNeighbors(PImage dst, int cX, int cY) {
+
+  int whiteNeighbors = 0;
+
+  for (int xOff = -1; xOff <= 1; xOff++) {
+    for (int yOff = -1; yOff <= 1; yOff++) {
+      // if (whiteNeighbors <= NEIGHBORS_THRESHOLD) {
+        int xCoord = cX + xOff;
+        int yCoord = cY + yOff;
+        if (xCoord >= 0 && xCoord < 512
+          && yCoord >= 0 && yCoord < 424
+          ) {
+          if (dst.pixels[yCoord * 512 + xCoord] == color(255,255,255)) {
+            whiteNeighbors++;
+          }
+        }
+      // }
+    }
+  }
+  return whiteNeighbors;// >= NEIGHBORS_THRESHOLD;
 }
   public void settings() {  size(1920, 1080, P3D); }
   static public void main(String[] passedArgs) {
