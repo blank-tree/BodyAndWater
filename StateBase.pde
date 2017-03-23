@@ -4,21 +4,19 @@
  * @author: HALT Design - Simon Fischer and Fernando Obieta
  */
 
-public class StateBase {
+ public class StateBase {
 
-	Silhouette silhouette;
-	float fadeState;
+ 	float fadeState;
 
-	StateBase(Silhouette silhouette) {
-		this.silhouette = silhouette;
+	StateBase() {
 		fadeState = 0;
 	}
 
-	public void draw() {
-
+	public void draw(KinectPV2 kinect) {
+		
 	}
 
-	public void fade() {
-
+	public void setFadeState(float fadeState) {
+		this.fadeState = fadeState;
 	}
 }

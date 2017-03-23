@@ -4,7 +4,8 @@
  * @author: HALT Design - Simon Fischer and Fernando Obieta
  */
 
-import KinectPV2.*;
+ import gab.opencv.*;
+ import KinectPV2.*;
 
 // SETTINGS
 final static boolean DEBUGGING = true;
@@ -36,11 +37,11 @@ void setup() {
 
 	// States
 	currentState = 0;
-	stateBlood = new StateBlood(silhouette);
-	stateBones = new StateBones(silhouette);
-	stateDigestion = new StateDigestion(silhouette);
-	stateMuscles = new StateMuscles(silhouette);
-	stateWater = new StateWater(silhouette);
+	stateBlood = new StateBlood();
+	stateBones = new StateBones();
+	stateDigestion = new StateDigestion();
+	stateMuscles = new StateMuscles();
+	stateWater = new StateWater();
 
 	// Debugging
 	debug = new Debug();
@@ -50,11 +51,17 @@ void draw() {
 
 	background(0);
 
-	silhouette.update();
+	kinect.getDepthMaskImage();
+
+	
+	ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonDepthMap();
+	int[] rawDepthData = kinect.getRawDepthData();
+
+	stateBones.draw(skeletonArray, rawDepthData);
 
 	// Debugging
 	if (DEBUGGING) {
-		debug.draw(silhouette);
+		
 	}
 }
 
@@ -62,8 +69,10 @@ void initKinect() {
 	kinect = new KinectPV2(this);
 
 	// Settings
+	kinect.enableBodyTrackImg(true);
 	kinect.enableDepthMaskImg(true);
 	kinect.enableSkeletonDepthMap(true);
+	kinect.enableSkeleton3DMap(true);
 
 	kinect.init();
 }
@@ -80,3 +89,4 @@ int decideState() {
 
 	return 0;
 }
+
