@@ -164,14 +164,10 @@ public void drawContour() {
         contourShape.endShape();
       }
       // shape(contourShape,0,0);
-
     }
-
   }
 
-
   // noStroke();
-
   // fill(0);
   // rect(0, 0, 130, 100);
   // fill(255, 0, 0);
@@ -491,6 +487,7 @@ public int checkNeighbors(PImage dst, int cX, int cY) {
   }
   return whiteNeighbors;// >= NEIGHBORS_THRESHOLD;
 }
+
   public void settings() {  size(1920, 1080, P3D); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "KinectBasic" };

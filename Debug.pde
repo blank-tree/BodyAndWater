@@ -16,8 +16,8 @@ public class Debug {
 
 	public void draw(Silhouette silhouette) {
 		checkKeys();
-		skeletons(silhouette);
-		textInformation(silhouette);
+		// skeletons(silhouette);
+		// textInformation(silhouette);
 	}
 
 	private void textInformation(Silhouette silhouette) {
@@ -34,11 +34,11 @@ public class Debug {
 		}
 	}
 
-	private void skeletons(Silhouette silhouette) {
-		if (displaySkeletons) {
-			silhouette.drawSkeletons();
-		}
-	}
+	// private void skeletons(Silhouette silhouette) {
+	// 	if (displaySkeletons) {
+	// 		silhouette.drawSkeletons();
+	// 	}
+	// }
 
 	private void checkKeys() {
 		if (keyPressed == true) {

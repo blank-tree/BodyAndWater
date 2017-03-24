@@ -7,7 +7,7 @@ public class StateMuscles extends StateBase {
 
 
 	StateMuscles(Silhouette silhouette) {
-		super(silhouette);
+		// super(silhouette);
 	}
 
 }

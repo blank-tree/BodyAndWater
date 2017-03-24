@@ -18,11 +18,11 @@ Noise noise;
 
 // States
 int currentState;
-StateBlood stateBlood;
+// StateBlood stateBlood;
 StateBones stateBones;
-StateDigestion stateDigestion;
-StateMuscles stateMuscles;
-StateWater stateWater;
+// StateDigestion stateDigestion;
+// StateMuscles stateMuscles;
+// StateWater stateWater;
 
 // Debugging
 Debug debug;
@@ -37,11 +37,11 @@ void setup() {
 
 	// States
 	currentState = 0;
-	stateBlood = new StateBlood();
+	// stateBlood = new StateBlood();
 	stateBones = new StateBones();
-	stateDigestion = new StateDigestion();
-	stateMuscles = new StateMuscles();
-	stateWater = new StateWater();
+	// stateDigestion = new StateDigestion();
+	// stateMuscles = new StateMuscles();
+	// stateWater = new StateWater();
 
 	// Debugging
 	debug = new Debug();
@@ -52,8 +52,9 @@ void draw() {
 	background(0);
 
 	kinect.getDepthMaskImage();
+	scale(2.54717); // scale from 424 to 1080
+	translate(200, 0, 0);
 
-	
 	ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonDepthMap();
 	int[] rawDepthData = kinect.getRawDepthData();
 
@@ -63,6 +64,7 @@ void draw() {
 	if (DEBUGGING) {
 		
 	}
+
 }
 
 void initKinect() {

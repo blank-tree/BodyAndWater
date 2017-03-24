@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY st0 "fill:#EEE8D2;">
+	<!ENTITY st1 "fill:#DCD3BC;">
+]>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="231px" height="253px" viewBox="0 0 231 253" style="enable-background:new 0 0 231 253;" xml:space="preserve">
+<g id="ribcage">
+	<polygon style="&st0;" points="109,158 66,160 48,162 18,178 17,171 34,156 50,151 109,145 	"/>
+	<polygon style="&st0;" points="102,187 76,198 56,206 30,221 30,215 41,205 57,196 100,177 	"/>
+	<polygon style="&st0;" points="109,27 67,26 40,26 9,30 8,25 29,17 57,15 110,15 	"/>
+	<polygon style="&st0;" points="109,129 57,132 37,135 18,149 16,141 31,126 61,119 109,116 	"/>
+	<polygon style="&st0;" points="109,100 70,102 27,107 8,117 6,110 29,97 77,89 109,87 	"/>
+	<polygon style="&st0;" points="109,74 75,74 35,78 0,89 0,82 13,74 50,64 109,58 	"/>
+	<polygon style="&st0;" points="109,52 57,50 18,53 4,60 3,52 15,44 61,37 110,38 	"/>
+	<polygon style="&st1;" points="116,181 76,217 47,253 40,252 65,207 103,163 	"/>
+	<polygon style="&st1;" points="109,41 66,39 40,36 9,24 7,30 24,41 50,49 109,54 	"/>
+	<polygon style="&st1;" points="27,218 29,238 40,252 45,246 36,234 30,215 	"/>
+	<polygon style="&st1;" points="109,70 57,67 19,61 4,52 0,57 15,70 61,81 109,84 	"/>
+	<polygon style="&st1;" points="109,99 70,98 27,93 0,81 0,88 29,103 77,110 109,113 	"/>
+	<polygon style="&st1;" points="109,131 75,129 35,122 6,110 2,115 18,126 50,139 109,147 	"/>
+	<polygon style="&st1;" points="105,174 67,164 35,151 15,141 14,149 31,159 59,176 105,188 	"/>
+	<polygon style="&st0;" points="122,158 165,160 184,162 213,178 214,171 197,156 181,151 122,145 	"/>
+	<polygon style="&st0;" points="129,187 155,198 175,206 201,221 201,215 190,205 174,196 132,177 	"/>
+	<polygon style="&st0;" points="123,27 164,26 191,26 222,30 223,25 203,17 175,15 121,15 	"/>
+	<polygon style="&st0;" points="122,129 174,132 194,135 213,149 215,141 200,126 171,119 122,116 	"/>
+	<polygon style="&st0;" points="122,100 161,102 204,107 224,117 226,110 202,97 155,89 122,87 	"/>
+	<polygon style="&st0;" points="122,74 156,74 196,78 231,89 231,82 219,74 181,64 122,58 	"/>
+	<polygon style="&st0;" points="122,52 174,50 213,53 227,60 228,52 216,44 170,37 121,38 	"/>
+	<polygon style="&st1;" points="115,181 156,217 184,253 191,252 166,207 128,163 	"/>
+	<polygon style="&st1;" points="122,41 165,39 191,36 222,24 225,30 208,41 181,49 122,54 	"/>
+	<polygon style="&st1;" points="217,177 196,202 159,219 159,207 189,193 214,171 	"/>
+	<polygon style="&st1;" points="17,171 43,193 72,207 72,219 36,202 14,177 	"/>
+	<polygon style="&st1;" points="204,218 202,238 191,252 186,246 195,234 201,215 	"/>
+	<polygon style="&st1;" points="122,70 174,67 212,61 227,52 231,57 216,70 171,81 122,84 	"/>
+	<polygon style="&st1;" points="122,99 161,98 204,93 231,81 231,88 202,103 155,110 122,113 	"/>
+	<polygon style="&st1;" points="122,131 156,129 196,122 226,110 230,115 214,126 181,139 122,147 	"/>
+	<polygon style="&st1;" points="126,174 165,164 197,151 216,141 218,149 200,159 173,176 126,188 	"/>
+</g>
+<g id="upper_spine">
+	<polygon style="&st1;" points="100,6 93,34 93,51 97,71 101,117 102,186 104,198 115,204 115,0 	"/>
+	<polygon style="&st1;" points="131,6 137,34 137,51 133,71 129,117 128,186 127,198 115,204 115,0 	"/>
+</g>
+</svg>

@@ -25,31 +25,30 @@
  	private int distance;
  	private int[] rawDepthData;
 
-
  	StateBones() {
  		// Shapes
- 		String pathSkeleton = "bodyTypes/skeleton/";
- 		_skull = loadShape(pathSkeleton + "skull.svg");
- 		_neck = loadShape(pathSkeleton + "neck.svg");
- 		_lowerspine = loadShape(pathSkeleton + "lower_spine.svg");
- 		_shoulder_l = loadShape(pathSkeleton + "shoulder_l.svg");
- 		_shoulder_r = loadShape(pathSkeleton + "shoulder_r.svg");
- 		_upperarm_l = loadShape(pathSkeleton + "upperarm_l.svg");
- 		_upperarm_r = loadShape(pathSkeleton + "upperarm_r.svg");
- 		_forearm_l = loadShape(pathSkeleton + "forearm_l.svg");
- 		_forearm_r = loadShape(pathSkeleton + "forearm_r.svg");
- 		_hand_l = loadShape(pathSkeleton + "hand_l.svg");
- 		_hand_r = loadShape(pathSkeleton + "hand_r.svg");
- 		_ribcage = loadShape(pathSkeleton + "ribcage.svg");
- 		_hip = loadShape(pathSkeleton + "hip.svg");
- 		_thigh_l = loadShape(pathSkeleton + "thigh_l.svg");
- 		_thigh_r = loadShape(pathSkeleton + "thigh_r.svg");
- 		_knee_l = loadShape(pathSkeleton + "knee_l.svg");
- 		_knee_r = loadShape(pathSkeleton + "knee_r.svg");
- 		_shin_l = loadShape(pathSkeleton + "shin_l.svg");
- 		_shin_r = loadShape(pathSkeleton + "shin_r.svg");
- 		_foot_l = loadShape(pathSkeleton + "foot_l.svg");
- 		_foot_r = loadShape(pathSkeleton + "foot_r.svg");
+ 		String path = "bodyTypes/skeleton/";
+ 		_skull = loadShape(path + "skull.svg");
+ 		_neck = loadShape(path + "neck.svg");
+ 		_lowerspine = loadShape(path + "lower_spine.svg");
+ 		_shoulder_l = loadShape(path + "shoulder_l.svg");
+ 		_shoulder_r = loadShape(path + "shoulder_r.svg");
+ 		_upperarm_l = loadShape(path + "upperarm_l.svg");
+ 		_upperarm_r = loadShape(path + "upperarm_r.svg");
+ 		_forearm_l = loadShape(path + "forearm_l.svg");
+ 		_forearm_r = loadShape(path + "forearm_r.svg");
+ 		_hand_l = loadShape(path + "hand_l.svg");
+ 		_hand_r = loadShape(path + "hand_r.svg");
+ 		_ribcage = loadShape(path + "ribcage.svg");
+ 		_hip = loadShape(path + "hip.svg");
+ 		_thigh_l = loadShape(path + "thigh_l.svg");
+ 		_thigh_r = loadShape(path + "thigh_r.svg");
+ 		_knee_l = loadShape(path + "knee_l.svg");
+ 		_knee_r = loadShape(path + "knee_r.svg");
+ 		_shin_l = loadShape(path + "shin_l.svg");
+ 		_shin_r = loadShape(path + "shin_r.svg");
+ 		_foot_l = loadShape(path + "foot_l.svg");
+ 		_foot_r = loadShape(path + "foot_r.svg");
 
  		distance = 0;
  	}
@@ -80,6 +79,8 @@
 	  // thigh
 	  drawBoneSvg(joints,   KinectPV2.JointType_HipLeft,        KinectPV2.JointType_KneeLeft,       _thigh_l,     PI,       1,          new PVector(0,0));
 	  drawBoneSvg(joints,   KinectPV2.JointType_HipRight,       KinectPV2.JointType_KneeRight,      _thigh_r,     PI,       1,          new PVector(0,0));
+	  // hip
+	  drawHipSvg(joints, 	KinectPV2.JointType_SpineBase, 		KinectPV2.JointType_HipLeft, KinectPV2.JointType_HipRight, _hip, 0, 0);
 	  // lower spine
 	  drawBoneSvg(joints,   KinectPV2.JointType_SpineMid,       KinectPV2.JointType_SpineBase,      _lowerspine,  PI,       1,          new PVector(0,0));
 	  // neck
@@ -127,6 +128,31 @@
 		pushMatrix();
 		shapeMode(CENTER);
 		translate((joint1.x+joint2.x)/2, (joint1.y+joint2.y)/2);
+		rotate(rot);
+		translate(0, _pos_fix);
+		scale(min(_scale, 2));
+		shape(_theShape, 0, 0);
+		scale(1);
+		shapeMode(CORNER);
+		popMatrix();
+
+	}
+
+	private void drawHipSvg(KJoint[] _joints, int _jointType1, int _jointType2, int _jointType3, PShape _theShape, float _rot_fix, float _pos_fix) {
+		PVector joint1 = new PVector(_joints[_jointType1].getX(), _joints[_jointType1].getY());
+		PVector joint2 = new PVector(_joints[_jointType2].getX(), _joints[_jointType2].getY());
+		PVector joint3 = new PVector(_joints[_jointType3].getX(), _joints[_jointType3].getY());
+
+		PVector matu = new PVector(joint2.x - joint3.x, joint2.y - joint3.y);
+		float rot = -atan2(matu.x, matu.y) + _rot_fix - PI/2;
+
+		distance = rawDepthData[min(max(int(joint1.y) * 512 + int(joint1.x), 0), rawDepthData.length-1)];
+		float _scale = pow(2, map(distance, 0, 4500, 4, 1))/24;
+
+		//draw the svg
+		pushMatrix();
+		shapeMode(CENTER);
+		translate(joint1.x, joint1.y);
 		rotate(rot);
 		translate(0, _pos_fix);
 		scale(min(_scale, 2));
