@@ -16,7 +16,7 @@
  	private int distance;
  	private int[] rawDepthData;
 
- 	StateDigestion(Soundfile speech) {
+ 	StateDigestion(SoundFile speech) {
  		super(speech);
 
  		// Shapes
@@ -70,16 +70,14 @@
 		PVector joint2 = new PVector(_joints[_jointType2].getX(), _joints[_jointType2].getY());
 		PVector matu = new PVector(joint1.x - joint2.x, joint1.y - joint2.y);
 		float rot = -atan2(matu.x, matu.y) -PI;
-		distance = rawDepthData[min(max(int(joint1.y) * 512 + int(joint1.x), 0), rawDepthData.length-1)];
-		float _scaleX = pow(2, map(distance, 0, 4500, 4, 1))/24;
-		float _scaleY = pow(2, map(distance, 0, 4500, 4, 1))/24 * map(dist(joint1.x, joint1.y, joint2.x, joint2.y), 0, 80, 0.3, 1.1);
 
 		pushMatrix();
 		shapeMode(CENTER);
-		translate((joint1.x+joint2.x)/2, (joint1.y+joint2.y)/2);
+		translate((joint1.x+joint2.x)/2+10, (joint1.y+joint2.y)/2-20);
 		rotate(rot);
-		scale(min(_scaleX,2), min(_scaleY, 2));
-		shape(_gullet, 0, 0);
+		scale(0.35);
+		shape(_gullet);
+		scale(1);
 		shapeMode(CORNER);
 		popMatrix();
 
@@ -90,15 +88,14 @@
 		PVector joint2 = new PVector(_joints[_jointType2].getX(), _joints[_jointType2].getY());
 		PVector matu = new PVector(joint1.x - joint2.x, joint1.y - joint2.y);
 		float rot = -atan2(matu.x, matu.y);
-		distance = rawDepthData[min(max(int(joint1.y) * 512 + int(joint1.x), 0), rawDepthData.length-1)];
-		float _scale = pow(2, map(distance, 0, 4500, 4, 1))/24;
 
 		pushMatrix();
 		shapeMode(CENTER);
-		translate(joint1.x-10, joint1.y+20);
+		translate(joint1.x, joint1.y);
 		rotate(rot);
-		scale(min(_scale, 2));
+		scale(0.3);
 		shape(_stomach, 0, 0);
+		scale(1);
 		shapeMode(CORNER);
 		popMatrix();
 
@@ -109,16 +106,14 @@
 		PVector joint2 = new PVector(_joints[_jointType2].getX(), _joints[_jointType2].getY());
 		PVector matu = new PVector(joint1.x - joint2.x, joint1.y - joint2.y);
 		float rot = -atan2(matu.x, matu.y);
-		distance = rawDepthData[min(max(int(joint1.y) * 512 + int(joint1.x), 0), rawDepthData.length-1)];
-		float _scaleX = pow(2, map(distance, 0, 4500, 4, 1))/24;
-		float _scaleY = pow(2, map(distance, 0, 4500, 4, 1))/24 * map(dist(joint1.x, joint1.y, joint2.x, joint2.y), 0, 80, 0.3, 1.1);
 
 		pushMatrix();
 		shapeMode(CENTER);
 		translate((joint1.x+joint2.x)/2, (joint1.y+joint2.y)/2+20);
 		rotate(rot);
-		scale(min(_scaleX,2), min(_scaleY, 2));
+		scale(0.3);
 		shape(_bg, 0, 0);
+		scale(1);
 		shapeMode(CORNER);
 		popMatrix();
 
@@ -129,16 +124,14 @@
 		PVector joint2 = new PVector(_joints[_jointType2].getX(), _joints[_jointType2].getY());
 		PVector matu = new PVector(joint1.x - joint2.x, joint1.y - joint2.y);
 		float rot = -atan2(matu.x, matu.y) + PI;
-		distance = rawDepthData[min(max(int(joint1.y) * 512 + int(joint1.x), 0), rawDepthData.length-1)];
-		float _scaleX = pow(2, map(distance, 0, 4500, 4, 1))/24;
-		float _scaleY = pow(2, map(distance, 0, 4500, 4, 1))/24 * map(dist(joint1.x, joint1.y, joint2.x, joint2.y), 0, 80, 0.3, 1.1);
 
 		pushMatrix();
 		shapeMode(CENTER);
 		translate((joint1.x+joint2.x)/2, (joint1.y+joint2.y)/2+20);
 		rotate(rot);
-		scale(min(_scaleX,2), min(_scaleY, 2));
+		scale(0.3);
 		shape(_colon, 0, 0);
+		scale(1);
 		shapeMode(CORNER);
 		popMatrix();
 
@@ -149,16 +142,14 @@
 		PVector joint2 = new PVector(_joints[_jointType2].getX(), _joints[_jointType2].getY());
 		PVector matu = new PVector(joint1.x - joint2.x, joint1.y - joint2.y);
 		float rot = -atan2(matu.x, matu.y);
-		distance = rawDepthData[min(max(int(joint1.y) * 512 + int(joint1.x), 0), rawDepthData.length-1)];
-		float _scaleX = pow(2, map(distance, 0, 4500, 4, 1))/24;
-		float _scaleY = pow(2, map(distance, 0, 4500, 4, 1))/24 * map(dist(joint1.x, joint1.y, joint2.x, joint2.y), 0, 80, 0.3, 1.1);
 
 		pushMatrix();
 		shapeMode(CENTER);
 		translate((joint1.x+joint2.x)/2, (joint1.y+joint2.y)/2+20);
 		rotate(rot);
-		scale(min(_scaleX,2), min(_scaleY, 2));
+		scale(0.3);
 		shape(_bowel, 0, 0);
+		scale(1);
 		shapeMode(CORNER);
 		popMatrix();
 

@@ -6,7 +6,7 @@
 public class StateWater extends StateBase {
 
 
-	StateWater(Soundfile speech) {
+	StateWater(SoundFile speech) {
 		super(speech);
 	}
 

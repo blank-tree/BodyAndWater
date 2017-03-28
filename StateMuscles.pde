@@ -6,7 +6,7 @@
 public class StateMuscles extends StateBase {
 
 
-	StateMuscles(Soundfile speech) {
+	StateMuscles(SoundFile speech) {
 		super(speech);
 	}
 

@@ -16,7 +16,7 @@
  	private long lastSpeech;
  	private long speechDelayTrigger;
 
- 	StateBase(Soundfile speech) {
+ 	StateBase(SoundFile speech) {
  		this.speech = speech;
  		stateActive = false;
  	}
@@ -29,14 +29,15 @@
  		if (stateActive) {
  			if (lastSpeech + SPEECH_INTERVAL > CURRENT_TIME) {
  				if (speechDelayTrigger + SPEECH_DELAY > CURRENT_TIME) {
- 					speechDelayTrigger, lastSpeech = CURRENT_TIME;
+ 					speechDelayTrigger = CURRENT_TIME;
+ 					lastSpeech = CURRENT_TIME;
  					speech.play();
  				}
  			} else {
  				speechDelayTrigger = CURRENT_TIME;
  			}
  		} else {
- 			speech.stop();
+ 			// speech.stop();
  			speechDelayTrigger = CURRENT_TIME;
  		}
  	}
