@@ -45,21 +45,24 @@
  	public void draw(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
  		super.updateSpeech();
 
-		this.rawDepthData = rawDepthData;
+ 		if (stateActive) {
 
-		  //individual joints
-		  for (int i = 0; i < skeletonArray.size(); i++) {
-		  	KSkeleton skeleton = (KSkeleton) skeletonArray.get(i);
-		    //if the skeleton is being tracked compute the skeleton joints
-		    if (skeleton.isTracked()) {
-		    	KJoint[] joints = skeleton.getJoints();
+			this.rawDepthData = rawDepthData;
 
-		    	color col  = skeleton.getIndexColor();
-		    	fill(col);
-		    	stroke(col);
+			  //individual joints
+			  for (int i = 0; i < skeletonArray.size(); i++) {
+			  	KSkeleton skeleton = (KSkeleton) skeletonArray.get(i);
+			    //if the skeleton is being tracked compute the skeleton joints
+			    if (skeleton.isTracked()) {
+			    	KJoint[] joints = skeleton.getJoints();
 
-		    	drawBody(joints);
-		  	}
+			    	color col  = skeleton.getIndexColor();
+			    	fill(col);
+			    	stroke(col);
+
+			    	drawBody(joints);
+			  	}
+			}
 		}
 	}
 

@@ -12,6 +12,10 @@ public class StateWater extends StateBase {
 
 	public void draw(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
  		super.updateSpeech();
+
+ 		if(stateActive) {
+
+ 		}
  		
 	}
 

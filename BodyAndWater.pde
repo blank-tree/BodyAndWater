@@ -96,9 +96,6 @@ void drawKinectImage() {
 
 int decideState() {
 
-
-
-
 	return 0;
 }
 
