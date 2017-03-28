@@ -18,8 +18,8 @@ Noise noise;
 
 // States
 int currentState;
-// StateBlood stateBlood;
-StateBones stateBones;
+StateBlood stateBlood;
+// StateBones stateBones;
 // StateDigestion stateDigestion;
 // StateMuscles stateMuscles;
 // StateWater stateWater;
@@ -37,8 +37,8 @@ void setup() {
 
 	// States
 	currentState = 0;
-	// stateBlood = new StateBlood();
-	stateBones = new StateBones();
+	stateBlood = new StateBlood();
+	// stateBones = new StateBones();
 	// stateDigestion = new StateDigestion();
 	// stateMuscles = new StateMuscles();
 	// stateWater = new StateWater();
@@ -58,7 +58,9 @@ void draw() {
 	ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonDepthMap();
 	int[] rawDepthData = kinect.getRawDepthData();
 
-	stateBones.draw(skeletonArray, rawDepthData);
+	// stateBones.draw(skeletonArray, rawDepthData);
+	// stateDigestion.draw(skeletonArray, rawDepthData);
+	stateBlood.draw(skeletonArray, rawDepthData);
 
 	// Debugging
 	if (DEBUGGING) {
