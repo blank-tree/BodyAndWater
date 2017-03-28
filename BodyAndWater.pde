@@ -11,6 +11,8 @@
 // SETTINGS
 final static boolean DEBUGGING = true;
 
+// Calibration
+final static float DISTANCE_STEP = 500;
 
 // Basic Variables
 KinectPV2 kinect;
@@ -66,9 +68,13 @@ void draw() {
 	ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonDepthMap();
 	int[] rawDepthData = kinect.getRawDepthData();
 
+	stateHandler();
+
+	stateBlood.draw(skeletonArray, rawDepthData);
 	// stateBones.draw(skeletonArray, rawDepthData);
 	// stateDigestion.draw(skeletonArray, rawDepthData);
-	stateBlood.draw(skeletonArray, rawDepthData);
+	// stateMuscles.draw(skeletonArray, rawDepthData);
+	// stateWater.draw(skeletonArray, rawDepthData);
 
 	// Debugging
 	if (DEBUGGING) {
@@ -94,8 +100,50 @@ void drawKinectImage() {
 	// image(videoImage, 0, 0);
 }
 
-int decideState() {
+void stateHandler(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
+	if (skeletonArray.size() > 0) {
+		KSkeleton skeleton = (KSkeleton) skeletonArray.get(0);
+		if (skeleton.isTracked()) {
+			KJoint[] joints = skeleton.getJoints();
 
-	return 0;
+			int distance = rawDepthData(
+				min(
+					max(joints[int(KinectPV2.JointType_SpineMid].getY()) * 512 + int(joints[KinectPV2.JointType_SpineMid].getX()))
+					, 0)
+				, rawDepthData.length-1);
+
+			if (distance < DISTANCE_STEP * 6 && distance > DISTANCE_STEP * 5) {
+				deactiveAllStates();
+				stateWater.stateActive = true;
+			} else if (distance < DISTANCE_STEP * 5 && distance > DISTANCE_STEP * 4) {
+				deactiveAllStates();
+				stateMuscles.stateActive = true;
+			} else if (distance < DISTANCE_STEP * 4 && distance > DISTANCE_STEP * 3) {
+				deactiveAllStates();
+				stateDigestion.stateActive = true;
+			} else if (distance < DISTANCE_STEP * 3 && distance > DISTANCE_STEP * 2) {
+				deactiveAllStates();
+				stateBlood.stateActive = true;
+			} else if (distance < DISTANCE_STEP * 2 && distance > DISTANCE_STEP) {
+				deactiveAllStates();
+				stateBones.stateActive = true;
+			} else {
+				deactiveAllStates();
+			}
+
+		} else {
+			deactiveAllStates();
+		}
+	} else {
+		deactiveAllStates();
+	}
+}
+
+void deactiveAllStates() {
+	stateBlood.stateActive, 
+	stateBones.stateActive, 
+	stateDigestion.stateActive, 
+	stateMuscles.stateActive, 
+	stateWater.stateActive = false;
 }
 

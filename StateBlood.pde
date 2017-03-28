@@ -49,10 +49,10 @@
 
 			this.rawDepthData = rawDepthData;
 
-			  //individual joints
-			  for (int i = 0; i < skeletonArray.size(); i++) {
-			  	KSkeleton skeleton = (KSkeleton) skeletonArray.get(i);
-			    //if the skeleton is being tracked compute the skeleton joints
+		    //individual joints
+			for (int i = 0; i < skeletonArray.size(); i++) {
+				KSkeleton skeleton = (KSkeleton) skeletonArray.get(i);
+				//if the skeleton is being tracked compute the skeleton joints
 			    if (skeleton.isTracked()) {
 			    	KJoint[] joints = skeleton.getJoints();
 
