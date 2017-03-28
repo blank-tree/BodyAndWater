@@ -6,6 +6,7 @@
 
  import gab.opencv.*;
  import KinectPV2.*;
+ import processing.sound.*;
 
 // SETTINGS
 final static boolean DEBUGGING = true;
@@ -24,6 +25,8 @@ StateBlood stateBlood;
 // StateMuscles stateMuscles;
 // StateWater stateWater;
 
+long CURRENT_TIME;
+
 // Debugging
 Debug debug;
 
@@ -37,17 +40,22 @@ void setup() {
 
 	// States
 	currentState = 0;
-	stateBlood = new StateBlood();
-	// stateBones = new StateBones();
-	// stateDigestion = new StateDigestion();
-	// stateMuscles = new StateMuscles();
-	// stateWater = new StateWater();
+	String speechPath = "speech/";
+	stateBlood = new StateBlood(new SoundFile(this, speechPath + "blood.mp3"));
+	// stateBones = new StateBones(new SoundFile(this, speechPath + "bones.mp3"));
+	// stateDigestion = new StateDigestion(new SoundFile(this, speechPath + "digestion.mp3"));
+	// stateMuscles = new StateMuscles(new SoundFile(this, speechPath + "muscles.mp3"));
+	// stateWater = new StateWater(new SoundFile(this, speechPath + "water.mp3"));
+
+	CURRENT_TIME = 0;
 
 	// Debugging
 	debug = new Debug();
 }
 
 void draw() {
+
+	CURRENT_TIME = millis();
 
 	background(0);
 

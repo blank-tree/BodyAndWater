@@ -6,17 +6,44 @@
 
  public class StateBase {
 
+ 	private final static int SPEECH_INTERVAL = 40000; // 40sec
+ 	private final static int SPEECH_DELAY = 4000; // 4sec
+
  	float fadeState;
+ 	boolean stateActive;
 
-	StateBase() {
-		fadeState = 0;
-	}
+ 	// Speech
+ 	SoundFile speech;
+ 	long lastSpeech;
+ 	long speechDelayTrigger;
 
-	public void draw(KinectPV2 kinect) {
-		
-	}
+ 	StateBase(Soundfile speech) {
+ 		fadeState = 0;
+ 		this.speech = speech;
+ 		stateActive = false;
+ 	}
 
-	public void setFadeState(float fadeState) {
-		this.fadeState = fadeState;
-	}
-}
+ 	public void draw(KinectPV2 kinect) {
+ 		println("no draw defined for this state");
+ 	}
+
+ 	public void setFadeState(float fadeState) {
+ 		this.fadeState = fadeState;
+ 	}
+
+ 	private void updateSpeech() {
+ 		if (stateActive) {
+ 			if (lastSpeech + SPEECH_INTERVAL > CURRENT_TIME) {
+ 				if (speechDelayTrigger + SPEECH_DELAY > CURRENT_TIME) {
+ 					speechDelayTrigger, lastSpeech = CURRENT_TIME;
+ 					speech.play();
+ 				}
+ 			} else {
+ 				speechDelayTrigger = CURRENT_TIME;
+ 			}
+ 		} else {
+ 			speech.stop();
+ 			speechDelayTrigger = CURRENT_TIME;
+ 		}
+ 	}
+ }

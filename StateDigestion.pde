@@ -16,7 +16,9 @@
  	private int distance;
  	private int[] rawDepthData;
 
- 	StateDigestion() {
+ 	StateDigestion(Soundfile speech) {
+ 		super(speech);
+
  		// Shapes
  		String path = "bodyTypes/digestion/";
 		_gullet = loadShape(path + "gullet.svg");
@@ -29,6 +31,8 @@
  	}
 
  	public void draw(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
+ 		super.updateSpeech();
+ 		
 		this.rawDepthData = rawDepthData;
 
 		  //individual joints

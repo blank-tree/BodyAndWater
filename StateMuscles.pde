@@ -6,8 +6,13 @@
 public class StateMuscles extends StateBase {
 
 
-	StateMuscles(Silhouette silhouette) {
-		// super(silhouette);
+	StateMuscles(Soundfile speech) {
+		super(speech);
+	}
+
+	public void draw(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
+ 		super.updateSpeech();
+ 		
 	}
 
 }

@@ -19,7 +19,9 @@
  	private int distance;
  	private int[] rawDepthData;
 
- 	StateBlood() {
+ 	StateBlood(Soundfile speech) {
+ 		super(speech);
+
  		// Shapes
  		String path = "bodyTypes/blood/";
  		_head = loadShape(path + "head.svg");
@@ -41,6 +43,8 @@
  	}
 
  	public void draw(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
+ 		super.updateSpeech();
+
 		this.rawDepthData = rawDepthData;
 
 		  //individual joints
