@@ -41,7 +41,7 @@ void setup() {
 	globalScale = 1;
 
 	initKinect();
-	silhouette = new Silhouette(kinect);
+	silhouette = new Silhouette();
 	noise = new Noise();
 
 	// States
@@ -76,11 +76,13 @@ void draw() {
 
 	stateHandler(skeletonArray, rawDepthData);
 
+	silhouette.draw(kinect);
 	stateBlood.draw(skeletonArray, rawDepthData);
 	stateBones.draw(skeletonArray, rawDepthData);
 	stateDigestion.draw(skeletonArray, rawDepthData);
 	stateMuscles.draw(skeletonArray, rawDepthData);
 	stateWater.draw(skeletonArray, rawDepthData);
+	
 
 	// Debugging
 	if (DEBUGGING) {
@@ -120,21 +122,26 @@ void stateHandler(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
 			} else if (distance < DISTANCE_STEP + 1000 * 5 && distance > DISTANCE_STEP * 4 + 1000) {
 				deactiveAllStates();
 				stateMuscles.stateActive = true;
+				silhouette.active = true;
 				println("State Muscles");
 			} else if (distance < DISTANCE_STEP + 1000 * 4 && distance > DISTANCE_STEP * 3 + 1000) {
 				deactiveAllStates();
 				stateBones.stateActive = true;
+				silhouette.active = true;
 				println("State Digestion");
 			} else if (distance < DISTANCE_STEP + 1000 * 3 && distance > DISTANCE_STEP * 2 + 1000) {
 				deactiveAllStates();
 				stateBlood.stateActive = true;
+				silhouette.active = true;
 				println("State Blood");
 			} else if (distance < DISTANCE_STEP + 1000 * 2 && distance > DISTANCE_STEP + 1000) {
 				deactiveAllStates();
 				stateDigestion.stateActive = true;
+				silhouette.active = true;
 				println("State Bones");
 			} else {
 				deactiveAllStates();
+				silhouette.active = true;
 			}
 
 		globalScale = map(distance, 1500, 4000, 0.6, 2);
@@ -154,5 +161,6 @@ void deactiveAllStates() {
 	stateDigestion.stateActive = false; 
 	stateMuscles.stateActive = false; 
 	stateWater.stateActive = false;
+	silhouette.active = false;
 }
 
