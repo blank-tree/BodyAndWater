@@ -76,11 +76,11 @@ void draw() {
 
 	kinect.getBodyTrackImage();
 
+	// translate(310, 0);
 	scale(2.54717); // scale from 424 to 1080
 	// translate(310, 0);
-
-	scale(globalScale);
-	translate(map(globalScale, 0.6, 2, 0, -300), map(globalScale, 0.6, 2, 0, -150));
+	
+	// translate(map(globalScale, 0.6, 2, 0, -300), map(globalScale, 0.6, 2, 0, -150));
 
 	ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonDepthMap();
 	int[] rawDepthData = kinect.getRawDepthData();
@@ -120,26 +120,26 @@ void stateHandler(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
 					0), 
 				rawDepthData.length-1)];
 
-			if (distance < DISTANCE_STEP * 6 + 1000 && distance > DISTANCE_STEP * 5 + 1000) {
+			if (distance < DISTANCE_STEP * 6 + 1500 && distance > DISTANCE_STEP * 5 + 1500) {
 				deactiveAllStates();
 				stateWater.stateActive = true;
 				// println("State Water");
-			} else if (distance < DISTANCE_STEP + 1000 * 5 && distance > DISTANCE_STEP * 4 + 1000) {
+			} else if (distance < DISTANCE_STEP + 1500 * 5 && distance > DISTANCE_STEP * 4 + 1500) {
 				deactiveAllStates();
 				stateMuscles.stateActive = true;
 				silhouette.active = true;
 				// println("State Muscles");
-			} else if (distance < DISTANCE_STEP + 1000 * 4 && distance > DISTANCE_STEP * 3 + 1000) {
+			} else if (distance < DISTANCE_STEP + 1500 * 4 && distance > DISTANCE_STEP * 3 + 1500) {
 				deactiveAllStates();
 				stateDigestion.stateActive = true;
 				silhouette.active = true;
 				// println("State Digestion");
-			} else if (distance < DISTANCE_STEP + 1000 * 3 && distance > DISTANCE_STEP * 2 + 1000) {
+			} else if (distance < DISTANCE_STEP + 1500 * 3 && distance > DISTANCE_STEP * 2 + 1500) {
 				deactiveAllStates();
 				stateBlood.stateActive = true;
 				silhouette.active = true;
 				// println("State Blood");
-			} else if (distance < DISTANCE_STEP + 1000 * 2 && distance > DISTANCE_STEP + 1000) {
+			} else if (distance < DISTANCE_STEP + 1500 * 2 && distance > DISTANCE_STEP + 1500) {
 				deactiveAllStates();
 				stateBones.stateActive = true;
 				silhouette.active = true;

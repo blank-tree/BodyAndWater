@@ -8,6 +8,8 @@ public class StateWater extends StateBase {
 
 	StateWater(String speechPath) {
 		super(speechPath);
+
+ 		// Shapes
 	}
 
 	public void draw(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
