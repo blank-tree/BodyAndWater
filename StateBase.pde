@@ -31,7 +31,7 @@
 
  	private void updateSpeech() {
  		if (stateActive) {
- 			if (CURRENT_TIME > lastSpeech + SPEECH_INTERVAL) {
+ 			if (CURRENT_TIME > lastSpeech + speechInterval) {
  				if (CURRENT_TIME > speechDelayTrigger + SPEECH_DELAY) {
  					speechDelayTrigger = CURRENT_TIME;
  					lastSpeech = CURRENT_TIME;
