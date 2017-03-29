@@ -8,19 +8,20 @@ public class StateWater extends StateBase {
 	private final static int THRESHHOLDCV = 5;
 
 	private OpenCV opencv;
-	float x;
-	float y;
-	float easing = 0.05;
 
-	PImage[] wave = new PImage[3];
+	PImage[] wave;
 
-	int[] pos = {0,0,0};
+	int time= 0;
+	float beginning= 0;
+	float change = 20;
+	float duration = 200;
+	boolean direction = true;
 
-	StateWater(String speechPath) {
+	StateWater(String speechPath, OpenCV opencv) {
 		super(speechPath);
 		this.opencv = opencv;
 
-
+	  wave = new PImage[3];
 	  wave[0] = loadImage("water_01.png");
 	  wave[1] = loadImage("water_02.png");
 	  wave[2] = loadImage("water_03.png");
@@ -29,38 +30,30 @@ public class StateWater extends StateBase {
 
 	public void draw(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
  		super.updateSpeech();
-
- 		
- 		
 	}
 
 	public void draw(KinectPV2 kinect) {
+		super.updateSpeech();
 
 		if(stateActive) {
- 			
  		
 			drawWater();
-			// Draw water
 
-			// noStroke();
-			// fill(255,0,0);
-			// rect(0,0,width,height);
+			opencv.loadImage(kinect.getBodyTrackImage());
+			opencv.gray();
+			opencv.invert();
+			opencv.threshold(THRESHHOLDCV);
+			PImage mask = opencv.getOutput();
 
-			// opencv.loadImage(kinect.getBodyTrackImage());
-			// opencv.gray();
-			// opencv.invert();
-			// opencv.threshold(THRESHHOLDCV);
-			// PImage mask = opencv.getOutput();
+			mask.loadPixels();
 
-			// mask.loadPixels();
+			for (int i = 0; i < mask.pixels.length; ++i) {
+				if (mask.pixels[i] == color(255,255,255)) {
+					mask.pixels[i] = color(0,0,0,0);
+				}
+			}
 
-			// for (int i = 0; i < mask.pixels.length; ++i) {
-				// if (mask.pixels[i] == color(255,255,255)) {
-					// mask.pixels[i] = color(0,0,0,0);
-				// }
-			// }
-
-			// mask.updatePixels();
+			mask.updatePixels();
 
 			// image(mask,0,0);
 
@@ -68,25 +61,31 @@ public class StateWater extends StateBase {
 	}
 
 	void drawWater() {
-	  
-	  float targetY = random(0, 400);
-	  float dy = targetY - y;
-	  y += dy * easing;
+	
+		if (direction) {
+			image(wave[0], 0, easeIn(time, beginning, change, duration), 280, 200);
+			image(wave[1], 0, easeIn(time, beginning, change, duration) + 100, 280, 200);
+			image(wave[2], 0, easeIn(time, beginning, change, duration) + 200, 280, 200);
+		} else {
+			image(wave[0], 0, easeIn(time, change, -change, duration), 280, 200);	
+			image(wave[1], 0, easeIn(time, change, -change, duration) + 100, 280, 200);
+			image(wave[2], 0, easeIn(time, change, -change, duration) + 200, 280, 200);
+		}
+    	if (time < duration) {
+    		time++;
+    	} else {
+    		time = 0;
+    		direction = !direction;
+    	}
 
-	  for (int i = 0; i < 3; i++) {
-	    drawWaterAnim((i+1)*2, color(i*50, i*80, i*100), i);
-	  }
 	}
 
-	void drawWaterAnim(int _spd, color _color, int _i) {
-	  fill(_color);
-	  image(wave[_i], pos[_i], y+(_i*120));
-	  image(wave[_i], pos[_i]-1100, y+(_i*120));
-	  if (pos[_i] < width) {
-	    pos[_i] += _spd;
-	  } else {
-	    pos[_i] = 0;
-	  }
+
+	float easeIn (float t, float b, float c, float d) {
+		if ((t/=d/2) < 1) {
+			return c/2*t*t*t + b;
+		}
+		return c/2*((t-=2)*t*t + 2) + b;
 	}
 
 }

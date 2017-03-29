@@ -65,20 +65,20 @@ public class StateMuscles extends StateBase {
 	private void drawBody(KJoint[] joints) {
 	  // Draw the SVGs:     joint 1                             joint 2                             grahic        rot fix   scale fix   pos fix
 	  //head
-	  drawMuscleSvg(joints,	KinectPV2.JointType_Head,           KinectPV2.JointType_SpineShoulder,	_head,   40,	PI,       1,          new PVector(0,0));
-	  drawMuscleSvg(joints,	KinectPV2.JointType_HipLeft,		KinectPV2.JointType_KneeLeft,		_thigh_l,   90,	PI,       1,          new PVector(0,0));
-	  drawMuscleSvg(joints,	KinectPV2.JointType_HipRight,		KinectPV2.JointType_KneeRight,		_thigh_r,   90,	PI,       1,          new PVector(0,0));
+	  drawMuscleSvg(joints,	KinectPV2.JointType_Head,           KinectPV2.JointType_SpineShoulder,	_head,   30,	PI,       1,          new PVector(0,0));
+	  drawMuscleSvg(joints,	KinectPV2.JointType_HipLeft,		KinectPV2.JointType_KneeLeft,		_thigh_l,   60,	PI,       1,          new PVector(0,0));
+	  drawMuscleSvg(joints,	KinectPV2.JointType_HipRight,		KinectPV2.JointType_KneeRight,		_thigh_r,   60,	PI,       1,          new PVector(0,0));
 	  drawMuscleSvg(joints,	KinectPV2.JointType_FootLeft,		KinectPV2.JointType_AnkleLeft,		_foot_l,   20,	PI,       1,          new PVector(0,0));
 	  drawMuscleSvg(joints,	KinectPV2.JointType_FootRight,		KinectPV2.JointType_AnkleRight,		_foot_r,   20,	PI,       1,          new PVector(0,0));
 	  drawMuscleSvg(joints,	KinectPV2.JointType_HandLeft,		KinectPV2.JointType_HandTipLeft,	_hand_l,   30,	PI,       1,          new PVector(0,0));
 	  drawMuscleSvg(joints,	KinectPV2.JointType_HandRight,		KinectPV2.JointType_HandTipRight,	_hand_r,   30,	PI,       1,          new PVector(0,0));
-	  drawMuscleSvg(joints,	KinectPV2.JointType_KneeLeft,		KinectPV2.JointType_AnkleLeft,		_shin_l,   80,	PI,       1,          new PVector(0,0));
-	  drawMuscleSvg(joints,	KinectPV2.JointType_KneeRight,		KinectPV2.JointType_AnkleRight,		_shin_r,   80,	PI,       1,          new PVector(0,0));
-	  drawMuscleSvg(joints,	KinectPV2.JointType_SpineShoulder,	KinectPV2.JointType_ElbowLeft,		_shoulder_l,   80,	PI*0.9,       1,          new PVector(0,0));
+	  drawMuscleSvg(joints,	KinectPV2.JointType_KneeLeft,		KinectPV2.JointType_AnkleLeft,		_shin_l,   60,	PI,       1,          new PVector(0,0));
+	  drawMuscleSvg(joints,	KinectPV2.JointType_KneeRight,		KinectPV2.JointType_AnkleRight,		_shin_r,   60,	PI,       1,          new PVector(0,0));
+	  drawMuscleSvg(joints,	KinectPV2.JointType_SpineShoulder,	KinectPV2.JointType_ElbowLeft,		_shoulder_l,   50,	PI*0.9,       1,          new PVector(0,0));
 	  drawMuscleSvg(joints,	KinectPV2.JointType_ElbowLeft,		KinectPV2.JointType_WristLeft,		_forearm_l,   40,	PI,       1,          new PVector(0,0));
 	  drawMuscleSvg(joints,	KinectPV2.JointType_ElbowRight,		KinectPV2.JointType_WristRight,		_forearm_r,   40,	PI,       1,          new PVector(0,0));
-	  drawMuscleSvg(joints,	KinectPV2.JointType_SpineShoulder,	KinectPV2.JointType_ElbowRight,		_shoulder_r,   80,	PI*1.1,       1,          new PVector(0,0));
-	  drawMuscleSvg(joints,	KinectPV2.JointType_SpineShoulder,	KinectPV2.JointType_SpineBase,		_body,   170,	PI,       1,          new PVector(0,0));
+	  drawMuscleSvg(joints,	KinectPV2.JointType_SpineShoulder,	KinectPV2.JointType_ElbowRight,		_shoulder_r,   50,	PI*1.1,       1,          new PVector(0,0));
+	  drawMuscleSvg(joints,	KinectPV2.JointType_SpineShoulder,	KinectPV2.JointType_SpineBase,		_body,   110,	PI,       1,          new PVector(0,0));
 	}
 
 
@@ -96,7 +96,7 @@ public class StateMuscles extends StateBase {
 		translate((joint1.x+joint2.x)/2, (joint1.y+joint2.y)/2);
 		rotate(rot);
 		translate(_pos_fix.x, _pos_fix.y);
-		scale(0.22, _scaleY*0.22);
+		scale(0.15, _scaleY*0.15);
 		scale(_scale_fix);
 		shape(_theShape, 0, 0);
 		scale(1);

@@ -55,7 +55,7 @@ void setup() {
 	stateBones = new StateBones(speechPath + "bones.mp3");
 	stateDigestion = new StateDigestion(speechPath + "digestion.mp3");
 	stateMuscles = new StateMuscles(speechPath + "muscles.mp3");
-	stateWater = new StateWater(speechPath + "water.mp3");
+	stateWater = new StateWater(speechPath + "water.mp3", new OpenCV(this, 512, 424));
 
 	CURRENT_TIME = 0;
 }
@@ -137,7 +137,7 @@ void stateHandler(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
 				rawDepthData.length-1)];
 				println(distance);
 
-			if (distance < DISTANCE_STEP * 5 + MIN_DISTANCE && distance > DISTANCE_STEP * 4 + MIN_DISTANCE) {
+			if (distance > DISTANCE_STEP * 4 + MIN_DISTANCE) {
 				deactiveAllStates();
 				stateWater.stateActive = true;
 				println("State Water");
