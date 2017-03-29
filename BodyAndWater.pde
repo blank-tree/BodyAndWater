@@ -166,7 +166,7 @@ void stateHandler(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
 				silhouette.active = true;
 			}
 
-		globalScale = map(distance, 2400, 3700, 0, 2);
+		globalScale = map(distance, 2400, 3900, 0, 2);
 
 		} else {
 			deactiveAllStates();
