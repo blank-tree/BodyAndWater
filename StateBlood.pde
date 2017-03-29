@@ -16,7 +16,6 @@
  	_thigh_l, _thigh_r,
  	_shin_l, _shin_r;
 
- 	private int distance;
  	private int[] rawDepthData;
 
  	StateBlood(String speechPath) {
@@ -39,7 +38,6 @@
 	 	_shin_l = loadShape(path + "shin_l.svg");
 	 	_shin_r = loadShape(path + "shin_r.svg");
 
- 		distance = 0;
  	}
 
  	public void draw(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {

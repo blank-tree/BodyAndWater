@@ -12,7 +12,8 @@
 final static boolean DEBUGGING = true;
 
 // Calibration
-final static float DISTANCE_STEP = 500;
+final static float DISTANCE_STEP = 350;
+final static float MIN_DISTANCE = 2400;
 
 // Basic Variables
 KinectPV2 kinect;
@@ -79,8 +80,10 @@ void draw() {
 	// translate(310, 0);
 	scale(2.54717); // scale from 424 to 1080
 	// translate(310, 0);
-	
-	// translate(map(globalScale, 0.6, 2, 0, -300), map(globalScale, 0.6, 2, 0, -150));
+
+	scale(globalScale);
+	float exp = map(globalScale, 0.6, 2, 2.7, 1);
+	translate(-pow( 4, exp), 0);
 
 	ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonDepthMap();
 	int[] rawDepthData = kinect.getRawDepthData();
@@ -119,31 +122,32 @@ void stateHandler(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
 					max(int(joints[KinectPV2.JointType_SpineMid].getY()) * 512 + int(joints[KinectPV2.JointType_SpineMid].getX()), 
 					0), 
 				rawDepthData.length-1)];
+				println(distance);
 
-			if (distance < DISTANCE_STEP * 6 + 1500 && distance > DISTANCE_STEP * 5 + 1500) {
+			if (distance < DISTANCE_STEP * 5 + MIN_DISTANCE && distance > DISTANCE_STEP * 4 + MIN_DISTANCE) {
 				deactiveAllStates();
 				stateWater.stateActive = true;
-				// println("State Water");
-			} else if (distance < DISTANCE_STEP + 1500 * 5 && distance > DISTANCE_STEP * 4 + 1500) {
+				println("State Water");
+			} else if (distance < DISTANCE_STEP * 4 + MIN_DISTANCE && distance > DISTANCE_STEP * 3 + MIN_DISTANCE) {
 				deactiveAllStates();
 				stateMuscles.stateActive = true;
 				silhouette.active = true;
-				// println("State Muscles");
-			} else if (distance < DISTANCE_STEP + 1500 * 4 && distance > DISTANCE_STEP * 3 + 1500) {
+				println("State Muscles");
+			} else if (distance < DISTANCE_STEP * 3 + MIN_DISTANCE && distance > DISTANCE_STEP * 2 + MIN_DISTANCE) {
 				deactiveAllStates();
 				stateDigestion.stateActive = true;
 				silhouette.active = true;
-				// println("State Digestion");
-			} else if (distance < DISTANCE_STEP + 1500 * 3 && distance > DISTANCE_STEP * 2 + 1500) {
+				println("State Digestion");
+			} else if (distance < DISTANCE_STEP * 2 + MIN_DISTANCE && distance > DISTANCE_STEP + MIN_DISTANCE) {
 				deactiveAllStates();
 				stateBlood.stateActive = true;
 				silhouette.active = true;
-				// println("State Blood");
-			} else if (distance < DISTANCE_STEP + 1500 * 2 && distance > DISTANCE_STEP + 1500) {
+				println("State Blood");
+			} else if (distance < DISTANCE_STEP + MIN_DISTANCE && distance > MIN_DISTANCE) {
 				deactiveAllStates();
 				stateBones.stateActive = true;
 				silhouette.active = true;
-				// println("State Bones");
+				println("State Bones");
 			} else {
 				deactiveAllStates();
 				silhouette.active = true;

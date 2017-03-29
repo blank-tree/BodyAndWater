@@ -7,7 +7,7 @@
 
 public class Silhouette {
 
-	private final static int THRESHHOLDCV = 20;
+	private final static int THRESHHOLDCV = 5;
 
 	public boolean active;
 	private OpenCV opencv;
