@@ -59,9 +59,9 @@
 		scale(1);
 	  drawGulletSvg(joints, KinectPV2.JointType_Neck, KinectPV2.JointType_SpineMid);
 	  drawBackgroundSvg(joints, KinectPV2.JointType_SpineMid, KinectPV2.JointType_SpineBase);
-	  drawStomachSvg(joints, KinectPV2.JointType_SpineMid, KinectPV2.JointType_SpineBase);
 	  drawBowelSvg(joints, KinectPV2.JointType_SpineMid, KinectPV2.JointType_SpineBase);
 	  drawColonSvg(joints, KinectPV2.JointType_SpineMid, KinectPV2.JointType_SpineBase);
+	  drawStomachSvg(joints, KinectPV2.JointType_SpineMid, KinectPV2.JointType_SpineBase);
 
 	}
 
@@ -73,9 +73,9 @@
 
 		pushMatrix();
 		shapeMode(CENTER);
-		translate((joint1.x+joint2.x)/2+10, (joint1.y+joint2.y)/2-20);
+		translate((joint1.x+joint2.x)/2+10, (joint1.y+joint2.y)/2);
 		rotate(rot);
-		scale(0.35);
+		scale(0.25);
 		shape(_gullet);
 		scale(1);
 		shapeMode(CORNER);
@@ -93,7 +93,7 @@
 		shapeMode(CENTER);
 		translate(joint1.x, joint1.y);
 		rotate(rot);
-		scale(0.3);
+		scale(0.23);
 		shape(_stomach, 0, 0);
 		scale(1);
 		shapeMode(CORNER);
@@ -105,13 +105,13 @@
 		PVector joint1 = new PVector(_joints[_jointType1].getX(), _joints[_jointType1].getY());
 		PVector joint2 = new PVector(_joints[_jointType2].getX(), _joints[_jointType2].getY());
 		PVector matu = new PVector(joint1.x - joint2.x, joint1.y - joint2.y);
-		float rot = -atan2(matu.x, matu.y);
+		float rot = -atan2(matu.x, matu.y) + PI;
 
 		pushMatrix();
 		shapeMode(CENTER);
 		translate((joint1.x+joint2.x)/2, (joint1.y+joint2.y)/2+20);
 		rotate(rot);
-		scale(0.3);
+		scale(0.2);
 		shape(_bg, 0, 0);
 		scale(1);
 		shapeMode(CORNER);
@@ -129,7 +129,7 @@
 		shapeMode(CENTER);
 		translate((joint1.x+joint2.x)/2, (joint1.y+joint2.y)/2+20);
 		rotate(rot);
-		scale(0.3);
+		scale(0.2);
 		shape(_colon, 0, 0);
 		scale(1);
 		shapeMode(CORNER);
@@ -147,7 +147,7 @@
 		shapeMode(CENTER);
 		translate((joint1.x+joint2.x)/2, (joint1.y+joint2.y)/2+20);
 		rotate(rot);
-		scale(0.3);
+		scale(0.2);
 		shape(_bowel, 0, 0);
 		scale(1);
 		shapeMode(CORNER);

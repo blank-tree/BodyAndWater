@@ -34,8 +34,8 @@ int _distance;
 
 void setup() {
   //fullScreen();
-  size(1920, 1080, P3D);
-  // fullScreen(P3D);
+  // size(1920, 1080, P3D);
+  fullScreen(P3D, 1);
 
   opencv = new OpenCV(this, 512, 424);
   kinect = new KinectPV2(this);
@@ -79,8 +79,8 @@ void draw() {
 
   scale(2.54717); // scale from 424 to 1080
 
-  drawContour();
-  // drawSkeleton();
+  // drawContour();
+  drawSkeleton();
   // printDepthData();
   fill(255);
   text(frameRate, 50, 50);

@@ -8,17 +8,21 @@
 
 public class Silhouette {
 
-	public boolean active;
+	private final static int THRESHHOLDCV = 20;
 
-	public Silhouette() {
+	public boolean active;
+	private OpenCV opencv;
+
+	public Silhouette(OpenCV opencv) {
 		active = false;
+		this.opencv = opencv;
 	}
 
 	public void draw(KinectPV2 kinect) {
 		opencv.loadImage(kinect.getBodyTrackImage());
 		opencv.gray();
 		opencv.invert();
-		opencv.threshold(threshold);
+		opencv.threshold(THRESHHOLDCV);
 		image(opencv.getOutput(),0,0);
 	}
 
@@ -32,7 +36,7 @@ public class Silhouette {
 			opencv.loadImage(kinect.getBodyTrackImage());
 			opencv.gray();
 			opencv.invert();
-			opencv.threshold(threshold);
+			opencv.threshold(THRESHHOLDCV);
 			PImage dst = opencv.getOutput();
 
 			ArrayList<Contour> contours = opencv.findContours(false, false);
@@ -42,7 +46,7 @@ public class Silhouette {
 
 					PShape contourShape = createShape();
 
-					contour.setPolygonApproximationFactor(polygonFactor);
+					contour.setPolygonApproximationFactor(4);
 					if (contour.numPoints() > 50) {
 
 						contourShape.beginShape();

@@ -69,24 +69,24 @@
 	private void drawBody(KJoint[] joints) {
 	  // Draw the SVGs:     joint 1                             joint 2                             grahic        rot fix   scale fix   pos fix
 	  // shin
-	  drawVeinSvg(joints,   KinectPV2.JointType_KneeLeft,       KinectPV2.JointType_AnkleLeft,      _shin_l, 80,	PI,       0.8,          new PVector(0,0));
-	  drawVeinSvg(joints,   KinectPV2.JointType_KneeRight,      KinectPV2.JointType_AnkleRight,     _shin_r, 80,	PI,       0.8,          new PVector(0,0));
+	  drawVeinSvg(joints,   KinectPV2.JointType_KneeLeft,       KinectPV2.JointType_AnkleLeft,      _shin_l, 90,	PI,       0.9,          new PVector(0,0));
+	  drawVeinSvg(joints,   KinectPV2.JointType_KneeRight,      KinectPV2.JointType_AnkleRight,     _shin_r, 90,	PI,       0.9,          new PVector(0,0));
 	  // thigh
-	  drawVeinSvg(joints,   KinectPV2.JointType_SpineBase,      KinectPV2.JointType_KneeLeft,       _thigh_l, 100,	-PI*1.1,       0.8,          new PVector(-12,0));
-	  drawVeinSvg(joints,   KinectPV2.JointType_SpineBase,      KinectPV2.JointType_KneeRight,      _thigh_r, 100,	PI*1.1,       0.8,          new PVector(12,0));
+	  drawVeinSvg(joints,   KinectPV2.JointType_SpineBase,      KinectPV2.JointType_KneeLeft,       _thigh_l, 100,	-PI*1.08,       0.8,          new PVector(-7,0));
+	  drawVeinSvg(joints,   KinectPV2.JointType_SpineBase,      KinectPV2.JointType_KneeRight,      _thigh_r, 100,	PI*1.08,       0.8,          new PVector(7,0));
 	  // upper arm
-	  drawVeinSvg(joints,   KinectPV2.JointType_ShoulderLeft,   KinectPV2.JointType_ElbowLeft,      _upperarm_l, 80,	-PI*1.07,       1,          new PVector(7,-10));
-	  drawVeinSvg(joints,   KinectPV2.JointType_ShoulderRight,  KinectPV2.JointType_ElbowRight,     _upperarm_r, 80,	PI*1.07,       1,          new PVector(-7,-10));
+	  drawVeinSvg(joints,   KinectPV2.JointType_ShoulderLeft,   KinectPV2.JointType_ElbowLeft,      _upperarm_l, 80,	-PI*1.07,       1,          new PVector(7,0));
+	  drawVeinSvg(joints,   KinectPV2.JointType_ShoulderRight,  KinectPV2.JointType_ElbowRight,     _upperarm_r, 80,	PI*1.07,       1,          new PVector(-7,0));
 	  // fore arm
-	  drawVeinSvg(joints,   KinectPV2.JointType_ElbowLeft,      KinectPV2.JointType_WristLeft,      _forearm_l, 100,	PI,       1,          new PVector(0,0));
-	  drawVeinSvg(joints,   KinectPV2.JointType_ElbowRight,     KinectPV2.JointType_WristRight,     _forearm_r, 100,	PI,       1,          new PVector(0,0));
+	  drawVeinSvg(joints,   KinectPV2.JointType_ElbowLeft,      KinectPV2.JointType_HandLeft,      _forearm_l, 100,	PI,       1,          new PVector(0,10));
+	  drawVeinSvg(joints,   KinectPV2.JointType_ElbowRight,     KinectPV2.JointType_HandRight,     _forearm_r, 100,	PI,       1,          new PVector(0,10));
 	  // shoulder
-	  drawVeinSvg(joints,   KinectPV2.JointType_SpineShoulder,  KinectPV2.JointType_ShoulderLeft,   _shoulder_l, 70,	PI/2,       1,          new PVector(0,-5));
-	  drawVeinSvg(joints,   KinectPV2.JointType_SpineShoulder,  KinectPV2.JointType_ShoulderRight,  _shoulder_r, 70,	-PI*0.8,       1,          new PVector(0,-5));
+	  drawVeinSvg(joints,   KinectPV2.JointType_SpineShoulder,  KinectPV2.JointType_ShoulderLeft,   _shoulder_l, 70,	PI/2,       1,          new PVector(0,0));
+	  drawVeinSvg(joints,   KinectPV2.JointType_SpineShoulder,  KinectPV2.JointType_ShoulderRight,  _shoulder_r, 70,	-PI*0.8,       1,          new PVector(0,0));
 	  //head
 	  drawVeinSvg(joints,	KinectPV2.JointType_Head,           KinectPV2.JointType_Neck,           _head, 60,			PI,       1,          new PVector(0,0));
 	  //heart
-	  drawHeartSvg(joints,	KinectPV2.JointType_SpineMid,  		KinectPV2.JointType_SpineShoulder,	_heart,				PI,       1);
+	  drawHeartSvg(joints,	KinectPV2.JointType_SpineMid,  		KinectPV2.JointType_SpineShoulder,	_heart,				PI,       0.8);
 	  //body
 	  drawVeinSvg(joints,	KinectPV2.JointType_SpineShoulder,  KinectPV2.JointType_SpineBase,		_body, 110,			PI,       0.8,          new PVector(0,10));
 	}

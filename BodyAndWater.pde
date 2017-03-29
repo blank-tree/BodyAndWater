@@ -35,13 +35,14 @@ long CURRENT_TIME;
 Debug debug;
 
 void setup() {
-	size(1920, 1080, P3D);
+	// size(1920, 1080, P3D);
+	fullScreen(P3D, 1);
 	background(0);
 
 	globalScale = 1;
 
 	initKinect();
-	silhouette = new Silhouette();
+	silhouette = new Silhouette(new OpenCV(this, 512, 424));
 	noise = new Noise();
 
 	// States
@@ -65,11 +66,13 @@ void draw() {
 
 	background(0);
 
-	kinect.getDepthMaskImage();
-	translate(310, 0);
+	kinect.getBodyTrackImage();
+
 	scale(2.54717); // scale from 424 to 1080
-	// scale(globalScale);
-	// translate(map(globalScale, 0.6, 2, 0, -300), map(globalScale, 0.6, 2, 0, -200));
+	// translate(310, 0);
+
+	scale(globalScale);
+	translate(map(globalScale, 0.6, 2, 0, -300), map(globalScale, 0.6, 2, 0, -150));
 
 	ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonDepthMap();
 	int[] rawDepthData = kinect.getRawDepthData();
@@ -82,7 +85,7 @@ void draw() {
 	stateDigestion.draw(skeletonArray, rawDepthData);
 	stateMuscles.draw(skeletonArray, rawDepthData);
 	stateWater.draw(skeletonArray, rawDepthData);
-	
+
 
 	// Debugging
 	if (DEBUGGING) {
@@ -118,27 +121,27 @@ void stateHandler(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
 			if (distance < DISTANCE_STEP * 6 + 1000 && distance > DISTANCE_STEP * 5 + 1000) {
 				deactiveAllStates();
 				stateWater.stateActive = true;
-				println("State Water");
+				// println("State Water");
 			} else if (distance < DISTANCE_STEP + 1000 * 5 && distance > DISTANCE_STEP * 4 + 1000) {
 				deactiveAllStates();
 				stateMuscles.stateActive = true;
 				silhouette.active = true;
-				println("State Muscles");
+				// println("State Muscles");
 			} else if (distance < DISTANCE_STEP + 1000 * 4 && distance > DISTANCE_STEP * 3 + 1000) {
 				deactiveAllStates();
-				stateBones.stateActive = true;
+				stateDigestion.stateActive = true;
 				silhouette.active = true;
-				println("State Digestion");
+				// println("State Digestion");
 			} else if (distance < DISTANCE_STEP + 1000 * 3 && distance > DISTANCE_STEP * 2 + 1000) {
 				deactiveAllStates();
 				stateBlood.stateActive = true;
 				silhouette.active = true;
-				println("State Blood");
+				// println("State Blood");
 			} else if (distance < DISTANCE_STEP + 1000 * 2 && distance > DISTANCE_STEP + 1000) {
 				deactiveAllStates();
-				stateDigestion.stateActive = true;
+				stateBones.stateActive = true;
 				silhouette.active = true;
-				println("State Bones");
+				// println("State Bones");
 			} else {
 				deactiveAllStates();
 				silhouette.active = true;
