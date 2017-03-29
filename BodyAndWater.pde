@@ -6,7 +6,7 @@
 
  import gab.opencv.*;
  import KinectPV2.*;
- import processing.sound.*;
+ import ddf.minim.*;
 
 // SETTINGS
 final static boolean DEBUGGING = true;
@@ -31,9 +31,6 @@ float globalScale;
 
 long CURRENT_TIME;
 
-// Debugging
-Debug debug;
-
 void setup() {
 	// size(1920, 1080, P3D);
 	fullScreen(P3D, 1);
@@ -55,9 +52,6 @@ void setup() {
 	stateWater = new StateWater(new SoundFile(this, speechPath + "water.mp3"));
 
 	CURRENT_TIME = 0;
-
-	// Debugging
-	debug = new Debug();
 }
 
 void draw() {
@@ -65,6 +59,17 @@ void draw() {
 	CURRENT_TIME = millis();
 
 	background(0);
+
+	// Debugging
+	if (DEBUGGING) {
+		noStroke();
+		fill(255);
+		rect(10, 10, 150, 50);
+		stroke(255);
+		fill(0);
+		textSize(12);
+		text("Framerate: " + frameRate, 15, 30);
+	}
 
 	kinect.getBodyTrackImage();
 
@@ -85,12 +90,6 @@ void draw() {
 	stateDigestion.draw(skeletonArray, rawDepthData);
 	stateMuscles.draw(skeletonArray, rawDepthData);
 	stateWater.draw(skeletonArray, rawDepthData);
-
-
-	// Debugging
-	if (DEBUGGING) {
-		
-	}
 
 }
 
