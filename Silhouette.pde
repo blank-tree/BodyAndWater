@@ -23,6 +23,7 @@ public class Silhouette {
 		opencv.invert();
 		opencv.threshold(THRESHHOLDCV);
 		image(opencv.getOutput(),0,0);
+		// maskImage.mask(image(opencv.getOutput(),0,0));
 	}
 
 	public void drawContour(KinectPV2 kinect) {

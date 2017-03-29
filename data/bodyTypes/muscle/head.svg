@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY st0 "fill:#F49B91;">
+	<!ENTITY st1 "fill:#F06156;">
+]>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="200px" height="223px" viewBox="0 0 200 223" style="enable-background:new 0 0 200 223;" xml:space="preserve">
+<path style="&st0;" d="M200,196l-64-30l-4-24l4-18l7-35l15-20l3-14l-8-5l-2-12l-4-23L136,3l-23-3l-10,9l-3,22L97,9L87,0L64,3L52,15
+	l-4,23l-2,12l-8,5l3,14l16,20l7,35l4,18l-4,24L0,196l57,21l43,6l0,0l43-6L200,196z M85,61l-9,3l-10-5l2-7h16l6,6L85,61z M115,61
+	l-4-4l6-6h15l2,7l-10,5L115,61z"/>
+<polygon style="&st1;" points="73,141 71,161 82,183 98,201 80,164 "/>
+<polygon style="&st1;" points="120,164 103,201 118,183 130,161 127,141 "/>
+<polygon style="&st1;" points="123,122 107,127 100,124 94,127 77,122 63,96 65,115 77,137 100,145 124,137 135,115 138,96 "/>
+</svg>

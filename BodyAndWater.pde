@@ -12,8 +12,10 @@
 final static boolean DEBUGGING = true;
 
 // Calibration
-final static float DISTANCE_STEP = 350;
+final static float DISTANCE_STEP = 300;
 final static float MIN_DISTANCE = 2400;
+
+float THE_CONSTANT = 2.58;
 
 // Basic Variables
 KinectPV2 kinect;
@@ -78,24 +80,35 @@ void draw() {
 	kinect.getBodyTrackImage();
 
 	// translate(310, 0);
-	scale(2.54717); // scale from 424 to 1080
-	// translate(310, 0);
 
-	scale(globalScale);
-	float exp = map(globalScale, 0.6, 2, 2.7, 1);
-	translate(-pow( 4, exp), 0);
+	// scale(globalScale);
 
 	ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonDepthMap();
 	int[] rawDepthData = kinect.getRawDepthData();
 
 	stateHandler(skeletonArray, rawDepthData);
+	translate(400, 656);
+
+	pushMatrix();
+
+	translate((512-512*(THE_CONSTANT+globalScale))/2, (424-424*(THE_CONSTANT+globalScale))/2);
+
+	scale(THE_CONSTANT+globalScale); // scale from 424 to 1080
+
 
 	silhouette.draw(kinect);
 	stateBlood.draw(skeletonArray, rawDepthData);
 	stateBones.draw(skeletonArray, rawDepthData);
 	stateDigestion.draw(skeletonArray, rawDepthData);
 	stateMuscles.draw(skeletonArray, rawDepthData);
-	stateWater.draw(skeletonArray, rawDepthData);
+	stateWater.draw(kinect);
+
+	stroke(255, 0, 0);
+	strokeWeight(2);
+	noFill();
+	// rect(0, 0, 512, 424);
+
+	popMatrix();
 
 }
 
@@ -153,7 +166,7 @@ void stateHandler(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
 				silhouette.active = true;
 			}
 
-		globalScale = map(distance, 1500, 4000, 0.6, 2);
+		globalScale = map(distance, 2400, 3700, 0, 2);
 
 		} else {
 			deactiveAllStates();
