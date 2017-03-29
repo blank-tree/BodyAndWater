@@ -7,19 +7,22 @@
  public class StateBase {
 
  	// Settings
- 	private final static int SPEECH_INTERVAL = 30000; // 30sec
  	private final static int SPEECH_DELAY = 4000; // 4sec
 
  	// Speech
  	private AudioPlayer speech;
  	private long lastSpeech;
  	private long speechDelayTrigger;
+ 	private int speechInterval;
 
  	public boolean stateActive;
 
  	StateBase(String speechPath) {
  		speech = MINIM.loadFile(speechPath);
+ 		speechInterval = speech.length() + SPEECH_DELAY;
  		stateActive = false;
+ 		lastSpeech = -speechInterval;
+ 		speechDelayTrigger = 0;
  	}
 
  	public void draw(KinectPV2 kinect) {
@@ -28,20 +31,20 @@
 
  	private void updateSpeech() {
  		if (stateActive) {
- 			if (lastSpeech + SPEECH_INTERVAL > CURRENT_TIME) {
- 				if (speechDelayTrigger + SPEECH_DELAY > CURRENT_TIME) {
+ 			if (CURRENT_TIME > lastSpeech + SPEECH_INTERVAL) {
+ 				if (CURRENT_TIME > speechDelayTrigger + SPEECH_DELAY) {
  					speechDelayTrigger = CURRENT_TIME;
  					lastSpeech = CURRENT_TIME;
  					if (!speech.isPlaying()) {
  						speech.play(0);
- 					} 					
+ 					}				
  				}
  			} else {
  				speechDelayTrigger = CURRENT_TIME;
  			}
  		} else {
  			if (speech.isPlaying()) {
- 				speech.stop();
+ 				speech.pause();
  			} 			
  			speechDelayTrigger = CURRENT_TIME;
  		}
