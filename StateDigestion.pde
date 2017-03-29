@@ -16,8 +16,8 @@
  	private int distance;
  	private int[] rawDepthData;
 
- 	StateDigestion(SoundFile speech) {
- 		super(speech);
+ 	StateDigestion(String speechPath) {
+ 		super(speechPath);
 
  		// Shapes
  		String path = "bodyTypes/digestion/";

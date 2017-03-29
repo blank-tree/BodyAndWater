@@ -6,8 +6,8 @@
 public class StateWater extends StateBase {
 
 
-	StateWater(SoundFile speech) {
-		super(speech);
+	StateWater(String speechPath) {
+		super(speechPath);
 	}
 
 	public void draw(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {

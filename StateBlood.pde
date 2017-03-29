@@ -19,9 +19,9 @@
  	private int distance;
  	private int[] rawDepthData;
 
- 	StateBlood(SoundFile speech) {
+ 	StateBlood(String speechPath) {
 
- 		super(speech);
+ 		super(speechPath);
 
  		// Shapes
  		String path = "bodyTypes/blood/";

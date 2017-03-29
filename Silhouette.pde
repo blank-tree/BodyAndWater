@@ -1,6 +1,5 @@
 /**
 * Silhouette Class
-*
 * Mostly based on the SkeletonMaskDepth example by Thomas Lengeling
 * https://github.com/ThomasLengeling/KinectPV2/blob/master/KinectPV2/examples/SkeletonMaskDepth/SkeletonMaskDepth.pde
 * @author: HALT Design - Simon Fischer and Fernando Obieta

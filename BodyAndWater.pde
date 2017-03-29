@@ -18,6 +18,7 @@ final static float DISTANCE_STEP = 500;
 KinectPV2 kinect;
 Silhouette silhouette;
 Noise noise;
+Minim MINIM;
 
 // States
 int currentState;
@@ -42,14 +43,16 @@ void setup() {
 	silhouette = new Silhouette(new OpenCV(this, 512, 424));
 	noise = new Noise();
 
+	MINIM = new Minim(this);
+
 	// States
 	currentState = 0;
 	String speechPath = "speech/";
-	stateBlood = new StateBlood(new SoundFile(this, speechPath + "blood.mp3"));
-	stateBones = new StateBones(new SoundFile(this, speechPath + "bones.mp3"));
-	stateDigestion = new StateDigestion(new SoundFile(this, speechPath + "digestion.mp3"));
-	stateMuscles = new StateMuscles(new SoundFile(this, speechPath + "muscles.mp3"));
-	stateWater = new StateWater(new SoundFile(this, speechPath + "water.mp3"));
+	stateBlood = new StateBlood(speechPath + "blood.mp3");
+	stateBones = new StateBones(speechPath + "bones.mp3");
+	stateDigestion = new StateDigestion(speechPath + "digestion.mp3");
+	stateMuscles = new StateMuscles(speechPath + "muscles.mp3");
+	stateWater = new StateWater(speechPath + "water.mp3");
 
 	CURRENT_TIME = 0;
 }

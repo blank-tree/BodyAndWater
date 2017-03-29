@@ -6,18 +6,19 @@
 
  public class StateBase {
 
- 	private final static int SPEECH_INTERVAL = 40000; // 40sec
+ 	// Settings
+ 	private final static int SPEECH_INTERVAL = 30000; // 30sec
  	private final static int SPEECH_DELAY = 4000; // 4sec
 
- 	public boolean stateActive;
-
  	// Speech
- 	private SoundFile speech;
+ 	private AudioPlayer speech;
  	private long lastSpeech;
  	private long speechDelayTrigger;
 
- 	StateBase(SoundFile speech) {
- 		this.speech = speech;
+ 	public boolean stateActive;
+
+ 	StateBase(String speechPath) {
+ 		speech = MINIM.loadFile(speechPath);
  		stateActive = false;
  	}
 
@@ -31,13 +32,17 @@
  				if (speechDelayTrigger + SPEECH_DELAY > CURRENT_TIME) {
  					speechDelayTrigger = CURRENT_TIME;
  					lastSpeech = CURRENT_TIME;
- 					speech.play();
+ 					if (!speech.isPlaying()) {
+ 						speech.play(0);
+ 					} 					
  				}
  			} else {
  				speechDelayTrigger = CURRENT_TIME;
  			}
  		} else {
- 			// speech.stop();
+ 			if (speech.isPlaying()) {
+ 				speech.stop();
+ 			} 			
  			speechDelayTrigger = CURRENT_TIME;
  		}
  	}

@@ -25,8 +25,8 @@
  	private int distance;
  	private int[] rawDepthData;
 
- 	StateBones(SoundFile speech) {
- 		super(speech);
+ 	StateBones(String speechPath) {
+ 		super(speechPath);
 
  		// Shapes
  		String path = "bodyTypes/skeleton/";
