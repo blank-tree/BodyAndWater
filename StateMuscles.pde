@@ -46,8 +46,8 @@ public class StateMuscles extends StateBase {
 			this.rawDepthData = rawDepthData;
 
 		    //individual joints
-			for (int i = 0; i < skeletonArray.size(); i++) {
-				KSkeleton skeleton = (KSkeleton) skeletonArray.get(i);
+			if (skeletonArray.size() > 0) {
+				KSkeleton skeleton = (KSkeleton) skeletonArray.get(0);
 				//if the skeleton is being tracked compute the skeleton joints
 			    if (skeleton.isTracked()) {
 			    	KJoint[] joints = skeleton.getJoints();
