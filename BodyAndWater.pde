@@ -10,6 +10,7 @@
 
 // SETTINGS
 final static boolean DEBUGGING = true;
+final static int STATE_CHANGE_DELAY = 1000; // 1sec
 
 // Calibration
 final static float DISTANCE_STEP = 300;
@@ -25,11 +26,15 @@ Minim MINIM;
 
 // States
 int currentState;
+int lastState;
 StateBlood stateBlood;
 StateBones stateBones;
 StateDigestion stateDigestion;
 StateMuscles stateMuscles;
 StateWater stateWater;
+
+// State handler
+long lastStateChange;
 
 float globalScale;
 
@@ -42,6 +47,8 @@ void setup() {
 
 	globalScale = 1;
 
+	lastStateChange = 0;
+
 	initKinect();
 	silhouette = new Silhouette(new OpenCV(this, 512, 424));
 	noise = new Noise();
@@ -50,6 +57,7 @@ void setup() {
 
 	// States
 	currentState = 0;
+	lastState = 0;
 	String speechPath = "speech/";
 	stateBlood = new StateBlood(speechPath + "blood.mp3");
 	stateBones = new StateBones(speechPath + "bones.mp3");
@@ -135,35 +143,51 @@ void stateHandler(ArrayList<KSkeleton> skeletonArray, int[] rawDepthData) {
 					max(int(joints[KinectPV2.JointType_SpineMid].getY()) * 512 + int(joints[KinectPV2.JointType_SpineMid].getX()), 
 					0), 
 				rawDepthData.length-1)];
-				println(distance);
+			println(distance);
 
-			if (distance > DISTANCE_STEP * 4 + MIN_DISTANCE) {
-				deactiveAllStates();
-				stateWater.stateActive = true;
-				println("State Water");
-			} else if (distance < DISTANCE_STEP * 4 + MIN_DISTANCE && distance > DISTANCE_STEP * 3 + MIN_DISTANCE) {
-				deactiveAllStates();
-				stateMuscles.stateActive = true;
-				silhouette.active = true;
-				println("State Muscles");
-			} else if (distance < DISTANCE_STEP * 3 + MIN_DISTANCE && distance > DISTANCE_STEP * 2 + MIN_DISTANCE) {
-				deactiveAllStates();
-				stateDigestion.stateActive = true;
-				silhouette.active = true;
-				println("State Digestion");
-			} else if (distance < DISTANCE_STEP * 2 + MIN_DISTANCE && distance > DISTANCE_STEP + MIN_DISTANCE) {
-				deactiveAllStates();
-				stateBlood.stateActive = true;
-				silhouette.active = true;
-				println("State Blood");
-			} else if (distance < DISTANCE_STEP + MIN_DISTANCE && distance > MIN_DISTANCE) {
-				deactiveAllStates();
-				stateBones.stateActive = true;
-				silhouette.active = true;
-				println("State Bones");
-			} else {
-				deactiveAllStates();
-				silhouette.active = true;
+			if (CURRENT_TIME > lastStateChange + STATE_CHANGE_DELAY) {
+
+				if (distance > DISTANCE_STEP * 4 + MIN_DISTANCE) {
+					deactiveAllStates();
+					stateWater.stateActive = true;
+					currentState = 5;
+					println("State Water");
+				} else if (distance < DISTANCE_STEP * 4 + MIN_DISTANCE && distance > DISTANCE_STEP * 3 + MIN_DISTANCE) {
+					deactiveAllStates();
+					stateMuscles.stateActive = true;
+					silhouette.active = true;
+					currentState = 4;
+					println("State Muscles");
+				} else if (distance < DISTANCE_STEP * 3 + MIN_DISTANCE && distance > DISTANCE_STEP * 2 + MIN_DISTANCE) {
+					deactiveAllStates();
+					stateDigestion.stateActive = true;
+					silhouette.active = true;
+					currentState = 3;
+					println("State Digestion");
+				} else if (distance < DISTANCE_STEP * 2 + MIN_DISTANCE && distance > DISTANCE_STEP + MIN_DISTANCE) {
+					deactiveAllStates();
+					stateBlood.stateActive = true;
+					silhouette.active = true;
+					currentState = 2;
+					println("State Blood");
+				} else if (distance < DISTANCE_STEP + MIN_DISTANCE && distance > MIN_DISTANCE) {
+					deactiveAllStates();
+					stateBones.stateActive = true;
+					silhouette.active = true;
+					currentState = 1;
+					println("State Bones");
+				} else {
+					deactiveAllStates();
+					silhouette.active = true;
+					currentState = 0;
+				}
+
+				if (currentState != lastState) {
+					lastStateChange = CURRENT_TIME;
+				}
+
+				lastState = currentState;
+
 			}
 
 		globalScale = map(distance, 2400, 3900, 0, 2);
